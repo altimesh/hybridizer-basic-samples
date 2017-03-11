@@ -84,7 +84,6 @@ namespace Mandelbrot
             Console.WriteLine("C# MPixels/s : {0}", 1.0E-6 * ((double)(N * N) * (double)redo / (1.0E-3 * watch.ElapsedMilliseconds)));
             #endregion c#
 
-            double best = 1.0E9;
             HybRunner runner = HybRunner.Cuda("Mandelbrot_CUDA.dll").SetDistrib(N, 256);
             wrapper = runner.Wrap(new Program());
 

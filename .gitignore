@@ -12,3 +12,8 @@
 /HybridizerBasicSamples/1.Simple/Mandelbrot/Mandelbrot/obj
 /HybridizerBasicSamples/1.Simple/Mandelbrot/Mandelbrot/bin
 /HybridizerBasicSamples/1.Simple/Mandelbrot/Mandelbrot_CUDA/vc140.pdb
+/HybridizerBasicSamples/1.Simple/Printf/SimplePrintf/bin
+/HybridizerBasicSamples/1.Simple/Printf/SimplePrintf/obj
+/HybridizerBasicSamples/1.Simple/Printf/SimplePrintf_CUDA/generated-sources
+/HybridizerBasicSamples/1.Simple/Printf/SimplePrintf_CUDA/x64
+/HybridizerBasicSamples/1.Simple/Printf/SimplePrintf_CUDA/vc140.pdb
