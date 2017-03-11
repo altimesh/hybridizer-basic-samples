@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Simple", "1.Simple", "{27283798-E3D6-4A61-AB4E-6FE433D2B776}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hello World", "Hello World", "{2B37F4AC-25A9-4B9B-9398-0812C89EEAC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "1.Simple\HelloWorld\HelloWorld\HelloWorld.csproj", "{DB431C6D-834A-4184-906B-9EBD4CD77876}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloWorld_CUDA", "1.Simple\HelloWorld\HelloWorld_CUDA\HelloWorld_CUDA.vcxproj", "{8E006B19-BAEC-45C4-993F-C2F121B8CE9F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DB431C6D-834A-4184-906B-9EBD4CD77876} = {DB431C6D-834A-4184-906B-9EBD4CD77876}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB431C6D-834A-4184-906B-9EBD4CD77876}.Debug|x64.ActiveCfg = Debug|x64
+		{DB431C6D-834A-4184-906B-9EBD4CD77876}.Debug|x64.Build.0 = Debug|x64
+		{DB431C6D-834A-4184-906B-9EBD4CD77876}.Release|x64.ActiveCfg = Release|x64
+		{DB431C6D-834A-4184-906B-9EBD4CD77876}.Release|x64.Build.0 = Release|x64
+		{8E006B19-BAEC-45C4-993F-C2F121B8CE9F}.Debug|x64.ActiveCfg = Debug|x64
+		{8E006B19-BAEC-45C4-993F-C2F121B8CE9F}.Debug|x64.Build.0 = Debug|x64
+		{8E006B19-BAEC-45C4-993F-C2F121B8CE9F}.Release|x64.ActiveCfg = Release|x64
+		{8E006B19-BAEC-45C4-993F-C2F121B8CE9F}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2B37F4AC-25A9-4B9B-9398-0812C89EEAC9} = {27283798-E3D6-4A61-AB4E-6FE433D2B776}
+		{DB431C6D-834A-4184-906B-9EBD4CD77876} = {2B37F4AC-25A9-4B9B-9398-0812C89EEAC9}
+		{8E006B19-BAEC-45C4-993F-C2F121B8CE9F} = {2B37F4AC-25A9-4B9B-9398-0812C89EEAC9}
+	EndGlobalSection
+EndGlobal
