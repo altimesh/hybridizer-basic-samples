@@ -5,3 +5,10 @@
 /HybridizerBasicSamples/.vs
 /HybridizerBasicSamples/*.opendb
 /HybridizerBasicSamples/*.db
+/HybridizerBasicSamples/1.Simple/HelloWorld/HelloWorld_CUDA/*.pdb
+/HybridizerBasicSamples/1.Simple/Mandelbrot/Mandelbrot_CUDA/generated-sources
+/HybridizerBasicSamples/1.Simple/Mandelbrot/Mandelbrot_CUDA/x64/Release/generated-sources/hybridizer.wrappers.cu.deps
+/HybridizerBasicSamples/1.Simple/Mandelbrot/Mandelbrot_CUDA/x64/Release
+/HybridizerBasicSamples/1.Simple/Mandelbrot/Mandelbrot/obj
+/HybridizerBasicSamples/1.Simple/Mandelbrot/Mandelbrot/bin
+/HybridizerBasicSamples/1.Simple/Mandelbrot/Mandelbrot_CUDA/vc140.pdb
