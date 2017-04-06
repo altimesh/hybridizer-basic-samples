@@ -50,6 +50,40 @@ namespace Sobel
             return valPixel;
         }
 
+        public static void ComputeSobel(ref byte[] outputPixel, byte[] inputPixel, int width, int height)
+        {
+
+            
+        }
+
+        public static void ReadImage(ref byte[] inputPixel, Bitmap image, int width, int height)
+        {
+            for(int i = 0; i < height; ++i)
+            {
+                for(int j = 0; j < width; ++j)
+                {
+                    inputPixel[i*height + j] = image.GetPixel(i, j).B;
+                }
+            }
+        }
+
+        public static void SaveImage(string nameImage, byte[] outputPixel, int width, int height)
+        {
+            Bitmap resImage = new Bitmap(width, height);
+            int col = 0;
+            for (int i = 0; i < height; ++i)
+            {
+                for (int j = 0; j < width; ++j)
+                {
+                    col = outputPixel[i * height + j];
+                    resImage.SetPixel(i, j, Color.FromArgb(col, col, col));
+                }
+            }
+
+            //store the result image.
+            resImage.Save(nameImage, System.Drawing.Imaging.ImageFormat.Png);
+        }
+
         static void Main(string[] args)
         {
             //load the base image
@@ -61,22 +95,14 @@ namespace Sobel
             //create an Bitmap with same dimension than base Image
             Bitmap resImage = new Bitmap(width, height);
 
-            for (int i = 0; i < height; ++i)
-                for(int j = 0 ; j < width; ++j)
-                {
-                    //Don't compute the borders, then let the pixel in black.
-                    if(i == 0 || j == 0 || i == height -1 || j == width -1) resImage.SetPixel(i, j, Color.FromArgb(0, 0, 0));
-                    else
-                    {
-                        //Do the sobel filter on the i,j coordonate and memorize the result
-                        grey = ComputeSobel(i, j, baseImage);
+            byte[] inputPixels = new byte[width * height];
+            byte[] outputPixels = new byte[width * height];
 
-                        //Affect the result on the pixel of the result image; 
-                        resImage.SetPixel(i, j, Color.FromArgb(grey, grey, grey));
-                    }
-                }
-            //store the result image.
-            resImage.Save("sobel.png", System.Drawing.Imaging.ImageFormat.Png);
+            ReadImage(ref inputPixels, baseImage, width, height);
+
+            ComputeSobel(ref outputPixels, inputPixels, width, height);
+
+            SaveImage("lena-sobel.bmp", outputPixels, width, height);
         }
     }
 }

@@ -11,8 +11,6 @@ namespace HelloWorld
         public static void Run(int N, double[] a, double[] b)
         {
             Parallel.For(0, N, i => { a[i] += b[i]; });
-
-            toto
         }
 
         static void Main(string[] args)
