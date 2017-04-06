@@ -9,64 +9,67 @@ namespace Sobel
 {
     class Program
     {
-
-        public static int ComputeSobel(int coordX, int coordY, Bitmap baseImage)
+        static void Main(string[] args)
         {
-            int valPixel = 0, hor = 0 , vert = 0;
-
-            /*
-             *      Memorize the convolution of the horizontal sobel filter 
-             *      1  0  -1
-             *      2  0  -2
-             *      1  0  -1
-             */
-            hor = baseImage.GetPixel(coordX + 1, coordY -1).B +
-                    2 * baseImage.GetPixel(coordX + 1, coordY).B +
-                    baseImage.GetPixel(coordX + 1, coordY + 1).B -
-                    baseImage.GetPixel(coordX - 1, coordY - 1).B -
-                    2 * baseImage.GetPixel(coordX - 1, coordY).B -
-                    baseImage.GetPixel(coordX - 1, coordY + 1).B;
-
-            /*
-             *      Memorize the convolution of the vertical sobel filter 
-             *       1   2   1
-             *       0   0   0
-             *      -1  -2  -1
-             */
-            vert = baseImage.GetPixel(coordX + 1, coordY + 1).B +
-                    2 * baseImage.GetPixel(coordX, coordY + 1).B +
-                    baseImage.GetPixel(coordX - 1, coordY + 1).B -
-                    baseImage.GetPixel(coordX + 1, coordY - 1).B -
-                    2 * baseImage.GetPixel(coordX, coordY - 1).B -
-                    baseImage.GetPixel(coordX - 1, coordY - 1).B;
+            Bitmap baseImage = (Bitmap)Image.FromFile("lena512.bmp");
             
-            //calculate the value in shade of grey of the pixel
-            valPixel = Math.Abs(hor) + Math.Abs(vert);
+            int height = baseImage.Height, width = baseImage.Width;
+            
+            Bitmap resImage = new Bitmap(width, height);
 
-            //test if the result is not between 0 and 255
-            if (valPixel < 0) valPixel = 0;
-            else if (valPixel > 255) valPixel = 255;          
+            byte[] inputPixels = new byte[width * height];
+            byte[] outputPixels = new byte[width * height];
 
-            return valPixel;
+            ReadImage(inputPixels, baseImage, width, height);
+
+            ComputeSobel(outputPixels, inputPixels, width, height);
+
+            SaveImage("lena-sobel.bmp", outputPixels, width, height);
         }
 
-        public static void ComputeSobel(ref byte[] outputPixel, byte[] inputPixel, int width, int height)
+        public static void ReadImage(byte[] inputPixel, Bitmap image, int width, int height)
         {
-
-            
-        }
-
-        public static void ReadImage(ref byte[] inputPixel, Bitmap image, int width, int height)
-        {
-            for(int i = 0; i < height; ++i)
+            for (int i = 0; i < height; ++i)
             {
-                for(int j = 0; j < width; ++j)
+                for (int j = 0; j < width; ++j)
                 {
-                    inputPixel[i*height + j] = image.GetPixel(i, j).B;
+                    inputPixel[i * height + j] = image.GetPixel(i, j).B;
                 }
             }
         }
+        
+        public static void ComputeSobel(byte[] outputPixel, byte[] inputPixel, int width, int height)
+        {
+            Parallel.For(0, width * height, (pixelId) => {
+                int i = pixelId / height;
+                int j = pixelId - i * height;
 
+                byte output = 0;
+                if (i != 0 && j != 0 && i != height - 1 && j != width - 1)
+                {
+                    byte topl = inputPixel[pixelId - width - 1];
+                    byte top = inputPixel[pixelId - width];
+                    byte topr = inputPixel[pixelId - width + 1];
+                    byte l = inputPixel[pixelId - 1];
+                    byte r = inputPixel[pixelId + 1];
+                    byte botl = inputPixel[pixelId + width - 1];
+                    byte bot = inputPixel[pixelId + width];
+                    byte botr = inputPixel[pixelId + width + 1];
+
+
+                    // todo
+                    output = (byte)(Math.Abs((int)(topl + 2 *l + botl - topr - 2*r - botr)) +
+
+                                    Math.Abs((int)(topl + 2* top + topr - botl - 2*bot - botr)));
+                    if (output > 255)
+                    {
+                        output = 255;
+                    }
+                    outputPixel[pixelId] = output;
+                }
+            });
+        }
+        
         public static void SaveImage(string nameImage, byte[] outputPixel, int width, int height)
         {
             Bitmap resImage = new Bitmap(width, height);
@@ -83,26 +86,6 @@ namespace Sobel
             //store the result image.
             resImage.Save(nameImage, System.Drawing.Imaging.ImageFormat.Png);
         }
-
-        static void Main(string[] args)
-        {
-            //load the base image
-            Bitmap baseImage = (Bitmap)Image.FromFile("lena512.bmp");
-
-            //Memorize the height and the width of the base image
-            int height = baseImage.Height, width = baseImage.Width, grey;
-
-            //create an Bitmap with same dimension than base Image
-            Bitmap resImage = new Bitmap(width, height);
-
-            byte[] inputPixels = new byte[width * height];
-            byte[] outputPixels = new byte[width * height];
-
-            ReadImage(ref inputPixels, baseImage, width, height);
-
-            ComputeSobel(ref outputPixels, inputPixels, width, height);
-
-            SaveImage("lena-sobel.bmp", outputPixels, width, height);
-        }
+        
     }
 }
