@@ -44,7 +44,7 @@ public:
 
 	~CudaTimer()
 	{
-		cudaEventDestroy(startignTime);
+		cudaEventDestroy(startingTime);
 		cudaEventDestroy(endingTime);
 	}
 
