@@ -1,6 +1,0 @@
-C:\Users\axel\Documents\Source\HybridizerBasicSamples\1.Simple\Sobel\Sobel\bin\Release\Sobel.exe.config
-C:\Users\axel\Documents\Source\HybridizerBasicSamples\1.Simple\Sobel\Sobel\bin\Release\Sobel.exe
-C:\Users\axel\Documents\Source\HybridizerBasicSamples\1.Simple\Sobel\Sobel\bin\Release\Sobel.pdb
-C:\Users\axel\Documents\Source\HybridizerBasicSamples\1.Simple\Sobel\Sobel\obj\Release\Sobel.exe
-C:\Users\axel\Documents\Source\HybridizerBasicSamples\1.Simple\Sobel\Sobel\obj\Release\Sobel.pdb
-C:\Users\axel\Documents\Source\HybridizerBasicSamples\1.Simple\Sobel\Sobel\obj\Release\Sobel.csprojResolveAssemblyReference.cache

@@ -44,7 +44,7 @@ namespace Sobel
                 int i = pixelId / height;
                 int j = pixelId - i * height;
 
-                byte output = 0;
+                int output = 0;
                 if (i != 0 && j != 0 && i != height - 1 && j != width - 1)
                 {
                     byte topl = inputPixel[pixelId - width - 1];
@@ -56,16 +56,18 @@ namespace Sobel
                     byte bot = inputPixel[pixelId + width];
                     byte botr = inputPixel[pixelId + width + 1];
 
-
-                    // todo
-                    output = (byte)(Math.Abs((int)(topl + 2 *l + botl - topr - 2*r - botr)) +
-
-                                    Math.Abs((int)(topl + 2* top + topr - botl - 2*bot - botr)));
+                    output = ((int)(topl + 2 * l + botl - topr - 2 * r - botr) +
+                                    (int)(topl + 2 * top + topr - botl - 2 * bot - botr));
+                    if(output < 0)
+                    {
+                        output = -output;
+                    }
                     if (output > 255)
                     {
                         output = 255;
                     }
-                    outputPixel[pixelId] = output;
+
+                    outputPixel[pixelId] = (byte) output;
                 }
             });
         }
