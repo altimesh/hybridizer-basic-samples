@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using Hybridizer.Runtime.CUDAImports;
+using System.Diagnostics;
 
 namespace Sobel
 {
@@ -22,7 +24,10 @@ namespace Sobel
 
             ReadImage(inputPixels, baseImage, width, height);
 
-            ComputeSobel(outputPixels, inputPixels, width, height);
+            HybRunner runner = HybRunner.Cuda("Sobel_CUDA.dll").SetDistrib(20, 256);
+            dynamic wrapper = runner.Wrap(new Program());
+
+            wrapper.ComputeSobel(outputPixels, inputPixels, width, height);
 
             SaveImage("lena-sobel.bmp", outputPixels, width, height);
         }
@@ -38,6 +43,7 @@ namespace Sobel
             }
         }
         
+        [EntryPoint]
         public static void ComputeSobel(byte[] outputPixel, byte[] inputPixel, int width, int height)
         {
             Parallel.For(0, width * height, (pixelId) => {
