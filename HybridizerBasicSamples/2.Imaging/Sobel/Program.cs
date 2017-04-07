@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System;
 using System.Threading.Tasks;
 using System.Drawing;
 using Hybridizer.Runtime.CUDAImports;
@@ -14,10 +14,13 @@ namespace Sobel
         static void Main(string[] args)
         {
             Bitmap baseImage = (Bitmap)Image.FromFile("lena512.bmp");
+            Stopwatch watch = new Stopwatch();
             
             int height = baseImage.Height, width = baseImage.Width;
             
             Bitmap resImage = new Bitmap(width, height);
+
+            byte[] outputPixelsC = new byte[width * height];
 
             byte[] inputPixels = new byte[width * height];
             byte[] outputPixels = new byte[width * height];
@@ -28,6 +31,14 @@ namespace Sobel
             dynamic wrapper = runner.Wrap(new Program());
 
             wrapper.ComputeSobel(outputPixels, inputPixels, width, height);
+
+            Console.WriteLine("CUDA Pixels by seconds :   " + (double)width * height / runner.LastKernelDuration.ElapsedMilliseconds * 1000);
+
+            watch.Start();
+            ComputeSobel(outputPixelsC, inputPixels, width, height);
+            watch.Stop();
+
+            Console.WriteLine("C# Pixels by seconds   : " + (double)width * height / watch.ElapsedMilliseconds *1000);
 
             SaveImage("lena-sobel.bmp", outputPixels, width, height);
         }

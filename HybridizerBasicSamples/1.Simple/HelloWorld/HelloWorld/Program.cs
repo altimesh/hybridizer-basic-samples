@@ -24,6 +24,8 @@ namespace HelloWorld
 
             double[] b = new double[N];
 
+            double dataGo = N * 3 * 8 * 1e-09;
+
             Random rand = new Random();
 
             //Initialize acuda et adotnet and b by some doubles randoms, acuda and adotnet have same numbers. 
@@ -46,9 +48,13 @@ namespace HelloWorld
 
             // run the method on GPU
             wrapped.Run(N, acuda, b);
+            
 
             //Stop the stopwatch
-            timer.Stop();            
+            timer.Stop();
+
+            Console.WriteLine("\nCUDA Bandwith  :  {0} Gb/s", Math.Round(dataGo / (1.0E-3 * timer.ElapsedMilliseconds),3));
+            Console.WriteLine("without memcpy : {0} Gb/s", Math.Round(dataGo / (1.0E-3 * runner.LastKernelDuration.ElapsedMilliseconds), 3));
 
             //Restart the stopwatch
             timer.Restart();
@@ -58,7 +64,9 @@ namespace HelloWorld
 
             //Stop the stopwatch
             timer.Stop();
-            
+
+            Console.WriteLine("C# Bandwith    : {0} Gb/s", Math.Round(dataGo / (1.0E-3 * timer.ElapsedMilliseconds), 3));
+
             // verify the results
             for (int k = 0; k < N; ++k)
             {
