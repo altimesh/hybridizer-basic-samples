@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Diagnostics;
 using System;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace Mandelbrot
 {
@@ -10,19 +11,20 @@ namespace Mandelbrot
     {
         const int maxiter = 1024;
         const int N = 2048;
-        const double fromX = -1.0;
-        const double fromY = -1.0;
-        const double size = 2.0;
-        const double h = size / (double)N;
-        const double tol = 0.0000001;
+        const float fromX = -1.0f;
+        const float fromY = -1.0f;
+        const float size = 2.0f;
+        const float h = size / (float)N;
+        const float tol = 0.0000001f;
 
         [Kernel]
-        public static int IterCount(double cx, double cy, out int itercount)
+        public static void IterCount(ref int2 result, float cx, float cy)
         {
-            itercount = 0;
-            double x = cx;
-            double y = cy;
-            double xx = 0.0, xy = 0.0, yy = 0.0, xxy = 0.0, xyy = 0.0, xxx = 0.0, yyy = 0.0, yyyy = 0.0, xxxx = 0.0, xxxxx = 0.0;
+            int itercount = 0;
+            int root = 0;
+            float x = cx;
+            float y = cy;
+            float xx = 0.0f, xy = 0.0f, yy = 0.0f, xxy = 0.0f, xyy = 0.0f, xxx = 0.0f, yyy = 0.0f, yyyy = 0.0f, xxxx = 0.0f, xxxxx = 0.0f;
             while (itercount < maxiter)
             {
                 xy = x * y;
@@ -36,39 +38,56 @@ namespace Mandelbrot
                 yyyy = yy * yy;
                 xxxxx = xxx * xx;
 
-                double invdenum = 1.0 / (3.0 * xxxx + 6.0 * xx * yy + 3.0 * yyyy);
+                float invdenum = 1.0f / (3.0f * xxxx + 6.0f * xx * yy + 3.0f * yyyy);
 
-                double numreal = 2.0 * xxxxx + 4.0 * xxx * yy + xx + 2.0 * x * yyyy - yy;
-                double numim = 2.0 * xxxx * y + 4.0 * xx * yyy - 2.0 * x * y + 2.0 * yyy * yy;
+                float numreal = 2.0f * xxxxx + 4.0f * xxx * yy + xx + 2.0f * x * yyyy - yy;
+                float numim = 2.0f * xxxx * y + 4.0f * xx * yyy - 2.0f * x * y + 2.0f * yyy * yy;
 
                 x = numreal * invdenum;
                 y = numim * invdenum;
                 itercount++;
 
-                int root = RootFind(x, y);
+                root = RootFind(x, y);
                 if (root > 0)
                 {
-                    return root;
+                    break;
                 }
             }
 
-            return 0;
+            result.x = root;
+            result.y = itercount;
         }
 
-        [Kernel]
-        public static int RootFind(double x, double y)
+        [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("sqrtf")]
+        private static float sqrtf(float a)
         {
-            double sqrtRoot = Math.Sqrt(3.0 / 4.0);
+            return (float)Math.Sqrt(a);
+        }
 
-            if ((x <= 1.0 + tol && x >= 1.0 - tol && y <= 0.0 + tol && y >= 0.0 - tol))
+        [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("fabs")]
+        private static float fabsf(float a)
+        {
+            return (float)Math.Abs(a);
+        }
+
+
+        const float sqrtRoot = 0.86602540378443864676372317075294f; //(float)sqrtf(3.0f / 4.0f);
+
+        [Kernel]
+        public static int RootFind(float x, float y)
+        {
+            if(fabsf(x - 1.0f) < tol && fabsf(y) < tol)
+            //if ((x <= 1.0F + tol && x >= 1.0F - tol && y <= 0.0F + tol && y >= 0.0F - tol))
             {
                 return 1;
             }
-            else if ((x <= -0.5 + tol && x >= -0.5 - tol && y <= sqrtRoot + tol && y >= sqrtRoot - tol))
+            else if (fabsf(x + 0.5f) < tol && fabsf(y - sqrtRoot) < tol)
+            //else if ((x <= -0.5F + tol && x >= -0.5F - tol && y <= sqrtRoot + tol && y >= sqrtRoot - tol))
             {
                 return 2;
             }
-            else if ((x <= -0.5 + tol && x >= -0.5 - tol && y <= -sqrtRoot + tol && y >= -sqrtRoot - tol))
+            else if (fabsf(x + 0.5f) < tol && fabsf(y + sqrtRoot) < tol)
+            //else if ((x <= -0.5F + tol && x >= -0.5F - tol && y <= -sqrtRoot + tol && y >= -sqrtRoot - tol))
             {
                 return 3;
             }
@@ -77,32 +96,32 @@ namespace Mandelbrot
         }
 
         [EntryPoint("run")]
-        public static void Run(int[] rootindex, int lineFrom, int lineTo, int[] itercount)
+        public static void Run(int2[] results, int lineFrom, int lineTo)
         {
             for (int i = lineFrom + threadIdx.y + blockIdx.y * blockDim.y; i < lineTo; i += blockDim.y * gridDim.y)
             {
                 for (int j = threadIdx.x + blockIdx.x * blockDim.x; j < N; j += blockDim.x * gridDim.x)
                  {
-                    double x = fromX + i * h;
-                    double y = fromY + j * h;
-                    rootindex[i * N + j] = IterCount(x, y, out itercount[i * N + j]);
+                    float x = fromX + i * h;
+                    float y = fromY + j * h;
+                    IterCount(ref results[i * N + j], x, y);
                 }
             }
         }
 
         private static dynamic wrapper;
 
-        public static void ComputeImage(int[] light,int[] rootColor, bool accelerate = true)
+        public static void ComputeImage(int2[] results, bool accelerate = true)
         {
             if (accelerate)
             {
-                wrapper.Run(light, 0, N, rootColor);
+                wrapper.Run(results, 0, N);
             }
             else
             {
                 Parallel.For(0, N, (line) =>
                 {
-                    Run(light, line, line + 1, rootColor);
+                    Run(results, line, line + 1);
                 });
             }
         }
@@ -115,10 +134,8 @@ namespace Mandelbrot
         static void Main(string[] args)
         {
             const int redo = 10;
-            int[] itercount_net = new int[N * N];
-            int[] rootindex_net = new int[N * N];
-            int[] itercount_cuda = new int[N * N];
-            int[] rootindex_cuda = new int[N * N];
+            int2[] result_net = new int2[N * N];
+            int2[] result_cuda = new int2[N * N];
 
             #region c#
 
@@ -127,7 +144,7 @@ namespace Mandelbrot
 
             for (int i = 0; i < redo; ++i)
             {
-                ComputeImage(rootindex_net, itercount_net, false);
+                ComputeImage(result_net, false);
             }
 
             watch.Stop();
@@ -145,7 +162,7 @@ namespace Mandelbrot
                 if(i == 1) // skip first call to skip cubin link phase
                     watch.Restart();
 
-                ComputeImage(rootindex_cuda, itercount_cuda, true);
+                ComputeImage(result_cuda, true);
             }
             watch.Stop();
 
@@ -165,8 +182,8 @@ namespace Mandelbrot
                 {
 
                     int index = i * N + j;
-                    int root = rootindex_net[index];
-                    int light = ComputeLight(itercount_net[index]);
+                    int root = result_cuda[index].x;
+                    int light = ComputeLight(result_cuda[index].y);
 
                     switch (root)
                     {

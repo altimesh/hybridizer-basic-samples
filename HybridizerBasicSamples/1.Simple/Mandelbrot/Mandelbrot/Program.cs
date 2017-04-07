@@ -81,7 +81,8 @@ namespace Mandelbrot
                 ComputeImage(light_net, false);
             }
             watch.Stop();
-            Console.WriteLine("C# MPixels/s : {0}", 1.0E-6 * ((double)(N * N) * (double)redo / (1.0E-3 * watch.ElapsedMilliseconds)));
+            double firstWatchResult = 1.0E-6 * ((double)(N * N) * (double)redo / (1.0E-3 * watch.ElapsedMilliseconds));
+            
             #endregion c#
 
             HybRunner runner = HybRunner.Cuda("Mandelbrot_CUDA.dll").SetDistrib(N, 256);
@@ -94,8 +95,8 @@ namespace Mandelbrot
                 ComputeImage(light_cuda, true);
             }
             watch.Stop();
-
-            Console.WriteLine("CUDA MPixels/s : {0}", 1.0E-6 * ((double)(N * N) * (double)redo / (1.0E-3 * watch.ElapsedMilliseconds)));
+            Console.WriteLine("C#   MPixels/s :  {0}", firstWatchResult);
+            Console.WriteLine("CUDA MPixels/s :  {0}", 1.0E-6 * ((double)(N * N) * (double)redo / (1.0E-3 * watch.ElapsedMilliseconds)));
             Console.WriteLine("without memcpy : {0}", 1.0E-6 * ((double)(N * N) / (1.0E-3 * runner.LastKernelDuration.ElapsedMilliseconds)));
             #endregion
 
@@ -121,6 +122,8 @@ namespace Mandelbrot
 
             image.Save("mandelbrot.png", System.Drawing.Imaging.ImageFormat.Png);
             #endregion
+
+            Process.Start("mandelbrot.png");
         }
     }
 }

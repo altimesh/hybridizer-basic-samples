@@ -53,7 +53,7 @@ namespace HelloWorld
             //Stop the stopwatch
             timer.Stop();
 
-            Console.WriteLine("\nCUDA Bandwith  :  {0} Gb/s", Math.Round(dataGo / (1.0E-3 * timer.ElapsedMilliseconds),3));
+            Console.WriteLine("CUDA Bandwith  :  {0} Gb/s", Math.Round(dataGo / (1.0E-3 * timer.ElapsedMilliseconds),3));
             Console.WriteLine("without memcpy : {0} Gb/s", Math.Round(dataGo / (1.0E-3 * runner.LastKernelDuration.ElapsedMilliseconds), 3));
 
             //Restart the stopwatch
