@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace NaiveMatrix
 {
     class Program
@@ -19,7 +18,6 @@ namespace NaiveMatrix
             }
             const int redo = 10;
 
-            
             int heightA = Convert.ToInt32(args[0]);
             int widthA = Convert.ToInt32(args[1]);
             int heightB = Convert.ToInt32(args[2]);
@@ -83,13 +81,10 @@ namespace NaiveMatrix
             if (!res_net.Equals(res_cuda))
                 Console.Out.WriteLine("ERROR !");
 
-
             //Write the matrix on the console
             //res_cuda.WriteMatrix();
 
             Console.Out.WriteLine("DONE");
-
-
         }
 
         [EntryPoint]

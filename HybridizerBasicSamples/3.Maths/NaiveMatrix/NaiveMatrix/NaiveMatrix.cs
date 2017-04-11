@@ -27,7 +27,6 @@ namespace NaiveMatrix
             set { this.values[i] = value; }
         }
 
-
         public void FillMatrix()
         {
             Random rand = new Random();
@@ -52,7 +51,6 @@ namespace NaiveMatrix
                 Console.WriteLine("");
             }
         }
-
 
         public override int GetHashCode()
         {
