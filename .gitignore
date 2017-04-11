@@ -19,3 +19,7 @@
 /HybridizerBasicSamples/1.Simple/Printf/SimplePrintf_CUDA/vc140.pdb
 /HybridizerBasicSamples/1.Simple/Sobel/Sobel
 *.pdb
+bin
+obj
+/HybridizerBasicSamples/3.Maths/Newton/Newton_CUDA/generated-sources
+/HybridizerBasicSamples/3.Maths/Newton/Newton_CUDA/x64
