@@ -10,42 +10,143 @@ namespace NaiveMatrix
 {
     class Program
     {
-        //first matrix height number
-        const int height1 = 1024;
-        //second matrix width number
-        const int width2 = 1024;
-        //the common size between the two matrix to allow the multiplication (first matrix width = second matrix height)
-        const int commonSize = 128;
+
+        public class NaiveMatrix
+        {
+            private int height = 1024;
+            private int width = 1024;
+            private float[] values;
+
+            public NaiveMatrix(int width, int height)
+            {
+                this.height = height;
+                this.width = width;
+                this.values = new float[this.height * this.width];
+            }
+
+            public NaiveMatrix()
+            {
+                this.values = new float[this.height * this.width];
+            }
+
+            public int Height
+            {
+                get { return this.height; }
+                set { this.height = value; }
+            }
+
+            public int Width
+            {
+                get { return this.width; }
+                set { this.width = value; }
+            }
+
+            public float this[int i]
+            {
+                get { return this.values[i]; }
+
+                set { this.values[i] = value; }
+            }
+
+
+            public void FillMatrix()
+            {
+                Random rand = new Random();
+                for (int i = 0; i < this.height; ++i)
+                {
+                    for (int j = 0; j < this.width; ++j)
+                    {
+                        this[i * this.width + j] = (float)rand.Next(2);
+                    }
+
+                }
+            }
+
+            public void WriteMatrix()
+            {
+                for (int k = 0; k < this.Height; ++k)
+                {
+                    for (int j = 0; j < this.Width; ++j)
+                    {
+                        Console.Write(this[k * this.Width + j].ToString() + " ");
+                    }
+                    Console.WriteLine("");
+                }
+            }
+
+            override
+            public Boolean Equals(Object o)
+            {
+                if (o == this) return true;
+                if (o.GetType() == typeof(NaiveMatrix))
+                {
+                    NaiveMatrix m = (NaiveMatrix)o;
+                    Boolean b = this.height == m.height && this.height == m.height;
+                    if (!b)
+                    {
+                        for (int i = 0; i < this.height; ++i)
+                        {
+                            for (int j = 0; j < this.width; ++j)
+                            {
+                                b = b && this[i * this.width + j] == m[i * m.width + j];
+                            }
+                        }
+                    }
+                    return b;
+                }
+
+                return false;
+            }
+        }
+
 
         static void Main(string[] args)
         {
+            if (args.Length == 0)
+            {
+                args = new string[] { "1024", "1024", "1024", "1024" };
+            }
             const int redo = 10;
+            int heightA = Convert.ToInt32(args[0]);
+            int widthA = Convert.ToInt32(args[1]);
+            int heightB = Convert.ToInt32(args[2]);
+            int widthB = Convert.ToInt32(args[3]);
+            if (widthA != heightB)
+            {
+                throw new ArgumentException();
+            }
 
-            float[] matrix1 = new float[commonSize * height1];
-            float[] matrix2 = new float[width2 * commonSize];
+            NaiveMatrix matrixA = new NaiveMatrix(widthA, heightA);
+            NaiveMatrix matrixB = new NaiveMatrix(widthB, heightB);
 
-            float[] res_net = new float[width2 * height1];
-            float[] res_cuda = new float[width2 * height1];
+            NaiveMatrix res_net = new NaiveMatrix(widthB, heightA);
+            NaiveMatrix res_cuda = new NaiveMatrix(widthB, heightA);
+
+            double numberCompute = (double)matrixA.Height * (double)matrixA.Width * (double)matrixB.Width * 3.0;
 
             Stopwatch watch = new Stopwatch();
 
-            FillMatrix(matrix1, matrix2);
+            matrixA.FillMatrix();
+            matrixB.FillMatrix();
+
+            Random rand = new Random();
 
             #region CUDA 
 
             HybRunner runner = HybRunner.Cuda("NaiveMatrix_CUDA.dll").SetDistrib(4, 5, 8, 128, 1, 0);
             dynamic wrapper = runner.Wrap(new Program());
 
+            watch.Start();
+
             for (int i = 0; i < redo; ++i)
             {
-                if (i == 1) watch.Start();
-                wrapper.MultiplyMatrix(res_cuda, matrix1, matrix2, 0, height1);
+                wrapper.ComputeRowsOfProduct(res_cuda, matrixA, matrixB, 0, matrixA.Height);
             }
 
             watch.Stop();
 
-            Console.WriteLine("CUDA float operation/s : {0}", (double)width2 * (double)height1 * ((double)redo - 1.0) / (watch.ElapsedMilliseconds * 1.0E-03));
-            Console.WriteLine("without memcpy         : {0}", (double)width2 * (double)height1 / (runner.LastKernelDuration.ElapsedMilliseconds * 1.0E-03));
+            Console.WriteLine("CUDA float operation/s : {0}", numberCompute * (double)redo / (watch.ElapsedMilliseconds * 1.0E-03));
+            Console.WriteLine("without memcpy         : {0}", numberCompute / (runner.LastKernelDuration.ElapsedMilliseconds * 1.0E-03));
             #endregion
 
             #region C#
@@ -53,58 +154,43 @@ namespace NaiveMatrix
 
             for (int i = 0; i < redo; ++i)
             {
-                Parallel.For(0, height1, (line) =>
+                Parallel.For(0, matrixA.Height, (line) =>
             {
-                MultiplyMatrix(res_net, matrix1, matrix2, line, line + 1);
+                ComputeRowsOfProduct(res_net, matrixA, matrixB, line, line + 1);
             });
             }
             watch.Stop();
-            Console.WriteLine("C#   float operation/s : {0}", (double)width2 * (double)height1 * (double)redo / (watch.ElapsedMilliseconds * 1.0E-03));
+            Console.WriteLine("C#   float operation/s :   {0}", numberCompute * (double)redo / (watch.ElapsedMilliseconds * 1.0E-03));
             #endregion
 
             // verify the results
-            for (int k = 0; k < height1; ++k)
-            {
-                for (int j = 0; j < width2; ++j)
-                {
-                    if (res_net[k*width2 + j] != res_cuda[k * width2 + j])
-                        Console.Out.WriteLine("ERROR !");
-                }
-            }
+
+            if (!res_net.Equals(res_cuda))
+                Console.Out.WriteLine("ERROR !");
+
+
+            //Write the matrix on the console
+            res_cuda.WriteMatrix();
+
             Console.Out.WriteLine("DONE");
 
 
         }
 
-        public static void FillMatrix(float[] matrix1, float[] matrix2)
-        {
-            Random rand = new Random();
-            for (int i = 0; i < commonSize; ++i)
-            {
-                for (int j = 0; j < height1; ++j)
-                {
-                    matrix1[j * commonSize + i] = (float)rand.Next(2);
-                }
-
-                for (int j = 0; j < width2; ++j)
-                {
-                    matrix2[i * width2 + j] = (float)rand.Next(2);
-                }
-            }
-        }
-
         [EntryPoint]
-        public static void MultiplyMatrix(float[] resultMatrix, float[] matrix1, float[] matrix2, int lineFrom, int lineTo)
+        public static void ComputeRowsOfProduct(NaiveMatrix resultMatrix, NaiveMatrix matrixA, NaiveMatrix matrixB, int lineFrom, int lineTo)
         {
+            int commonSize = matrixA.Width;
             for (int i = lineFrom + threadIdx.y + blockIdx.y * blockDim.y; i < lineTo; i += blockDim.y * gridDim.y)
             {
-                for (int j = threadIdx.x + blockIdx.x * blockDim.x; j < width2; j += blockDim.x * gridDim.x)
-                { 
-                    resultMatrix[j + i * width2] = 0;
+                for (int j = threadIdx.x + blockIdx.x * blockDim.x; j < matrixB.Width; j += blockDim.x * gridDim.x)
+                {
+                    resultMatrix[i * matrixB.Width + j] = 0.0f;
 
                     for (int k = 0; k < commonSize; ++k)
                     {
-                        resultMatrix[j + i * width2] += matrix1[i * commonSize + k] * matrix2[k * width2 + j];
+                        resultMatrix[i * matrixB.Width + j] += (matrixA[i * commonSize + k] * matrixB[k * matrixB.Width + j]);
+
                     }
                 }
             }
