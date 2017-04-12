@@ -17,6 +17,8 @@ namespace HelloWorld
         {
             //Initialize a stopwatch
             Stopwatch timer = new Stopwatch();
+            
+            toto
 
             int N = 1024 * 1024 * 64;
             double[] acuda = new double[N];
