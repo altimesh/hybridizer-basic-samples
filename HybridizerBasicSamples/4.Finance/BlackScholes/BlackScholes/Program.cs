@@ -12,7 +12,7 @@ namespace BlackScholes
     class Program
     {
         const int OPT_N = 4000000;
-        const int NUM_ITERATIONS = 512;
+        const int NUM_ITERATIONS = 1;
 
         const int OPT_SZ = OPT_N * sizeof(float);
         const float RISKFREE = 0.02f;
@@ -74,37 +74,53 @@ namespace BlackScholes
             watch.Stop();
             Console.WriteLine("nb ms c#       : {0}", watch.ElapsedMilliseconds / NUM_ITERATIONS);
 
+            float maxCallError = 0.0F;
+            float maxPutError = 0.0F;
+            float callL2Error = 0.0F;
+            float putL2Error = 0.0F;
+            float callL1Error = 0.0F;
+            float putL1Error = 0.0F;
             for (int i = 0; i < OPT_N; ++i)
             {
-                if (Math.Abs(callResult_net[i] - callResult_cuda[i]) > 1.0e-4 && Math.Abs(putResult_net[i] - putResult_cuda[i]) > 1.0E-4)
-                {
-                    Console.Out.WriteLine("Error !");
-                     //Console.WriteLine(i +" callResult expected {0} got {1}\nPutResult expected {2} got {3}",callResult_net[i],callResult_cuda[i], putResult_net[i], putResult_cuda[i]);
-                }
-                   
+                float callError = Math.Abs(callResult_net[i] - callResult_cuda[i]);
+                float putError = Math.Abs(putResult_net[i] - putResult_cuda[i]);
+                callL2Error += callError * callError;
+                putL2Error += putError * putError;
+                callL1Error += callError;
+                putL1Error += putError;
+                maxCallError = maxCallError > callError ? maxCallError : callError;
+                maxPutError = maxPutError > putError ? maxPutError : putError;
             }
+
+            callL1Error /= (float)OPT_N;
+            putL1Error /= (float)OPT_N;
+            callL2Error = Sqrtf(callL2Error) / (float)OPT_N;
+            putL2Error = Sqrtf(putL2Error) / (float)OPT_N;
+
+            Console.WriteLine("CALL ERRORS : Linf : {0:G17}, L2 : {1:G17}, L1: {2:G17}", maxCallError, callL2Error, callL1Error);
+            Console.WriteLine("PUT ERRORS  : Linf : {0:G17}, L2 : {1:G17}, L1: {2:G17}", maxPutError, putL2Error, putL1Error);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("fabs")]
-        public static float fabs(float f)
+        [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("fabsf")]
+        public static float fabsf(float f)
         {
             return Math.Abs(f);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("expf")]
-        public static float Exp(float f)
+        public static float Expf(float f)
         {
             return (float)Math.Exp((double)f);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("sqrtf")]
-        public static float Sqrt(float f)
+        public static float Sqrtf(float f)
         {
             return (float)Math.Sqrt((double)f);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("logf")]
-        public static float Log(float f)
+        public static float Logf(float f)
         {
             return (float)Math.Log((double)f);
         }
@@ -125,15 +141,15 @@ namespace BlackScholes
                 float sqrtT, expRT;
                 float f1, f2, CNDF1, CNDF2;
 
-                sqrtT = Sqrt(optionYears[i]);
-                f1 = (Log(stockPrice[i] / optionStrike[i]) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * optionYears[i]) /
+                sqrtT = Sqrtf(optionYears[i]);
+                f1 = (Logf(stockPrice[i] / optionStrike[i]) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * optionYears[i]) /
                          (VOLATILITY * sqrtT);
                 f2 = f1 - VOLATILITY * sqrtT;
 
                 CNDF1 = CND(f1);
                 CNDF2 = CND(f2);
 
-                expRT = Exp(-RISKFREE * optionYears[i]);
+                expRT = Expf(-RISKFREE * optionYears[i]);
                 callResult[i] = stockPrice[i] * CNDF1 - optionStrike[i] * expRT * CNDF2;
                 putResult[i] = optionStrike[i] * expRT * (1.0f - CNDF2) - stockPrice[i] * (1.0f - CNDF1);
 
@@ -150,9 +166,9 @@ namespace BlackScholes
             const float A5 = 1.330274429f;
             const float RSQRT2PI = 0.39894228040143267793994605993438f;
 
-            float K = 1.0f / (1.0f + 0.2316419f * fabs(f));
+            float K = 1.0f / (1.0f + 0.2316419f * fabsf(f));
 
-            float cnd = RSQRT2PI * Exp(-0.5f * f * f) *
+            float cnd = RSQRT2PI * Expf(-0.5f * f * f) *
                         (K * (A1 + K * (A2 + K * (A3 + K * (A4 + K * A5)))));
 
             if (f > 0)
