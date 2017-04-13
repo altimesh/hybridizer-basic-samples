@@ -12,7 +12,7 @@ namespace BlackScholesFloat4
     class Program
     {
         const int OPT_N = 4000000;
-        const int NUM_ITERATIONS = 512;
+        const int NUM_ITERATIONS = 2;
 
         const int OPT_SZ = OPT_N * sizeof(float);
         const float RISKFREE = 0.02f;
@@ -111,7 +111,7 @@ namespace BlackScholesFloat4
             return (float)Math.Log((double)f);
         }
 
-        [EntryPoint]
+        [EntryPoint, LaunchBounds(256, 4)]
         public static void BlackScholes(
             float4[] callResult,
             float4[] putResult,
@@ -124,78 +124,55 @@ namespace BlackScholesFloat4
         {
             for (int i = lineFrom + blockDim.x * blockIdx.x + threadIdx.x; i < lineTo; i += blockDim.x * gridDim.x)
             {
-                #region blackscholesx
-                float sqrtTX, expRTX;
-                float f1X, f2X, CNDF1X, CNDF2X;
+                float4 sqrtT, expRT, f1, f2, CNDF1, CNDF2;
 
-                sqrtTX = Sqrtf(optionYears[i].x);
-                f1X = (Logf(stockPrice[i].x / optionStrike[i].x) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * optionYears[i].x) /
-                         (VOLATILITY * sqrtTX);
-                f2X = f1X - VOLATILITY * sqrtTX;
+                float4 years = optionYears[i];
+                float4 strike = optionStrike[i];
+                float4 price = stockPrice[i];
+                float4 call = new float4();
+                float4 put = new float4();
 
-                CNDF1X = CND(f1X);
-                CNDF2X = CND(f2X);
+                sqrtT.x = Sqrtf(years.x);
+                sqrtT.y = Sqrtf(years.y);
+                sqrtT.z = Sqrtf(years.z);
+                sqrtT.w = Sqrtf(years.w);
+                f1.x = (Logf(price.x / strike.x) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * years.x) / (VOLATILITY * sqrtT.x);
+                f1.y = (Logf(price.y / strike.y) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * years.y) / (VOLATILITY * sqrtT.y);
+                f1.z = (Logf(price.z / strike.z) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * years.z) / (VOLATILITY * sqrtT.z);
+                f1.w = (Logf(price.w / strike.w) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * years.w) / (VOLATILITY * sqrtT.w);
+                f2.x = f1.x - VOLATILITY * sqrtT.x;
+                f2.y = f1.y - VOLATILITY * sqrtT.y;
+                f2.z = f1.z - VOLATILITY * sqrtT.z;
+                f2.w = f1.w - VOLATILITY * sqrtT.w;
 
-                expRTX = Expf(-RISKFREE * optionYears[i].x);
-                callResult[i].x = stockPrice[i].x * CNDF1X - optionStrike[i].x * expRTX * CNDF2X;
-                putResult[i].x = optionStrike[i].x * expRTX * (1.0f - CNDF2X) - stockPrice[i].x * (1.0f - CNDF1X);
-                #endregion
+                CNDF1.x = CND(f1.x);
+                CNDF1.y = CND(f1.y);
+                CNDF1.z = CND(f1.z);
+                CNDF1.w = CND(f1.w);
+                CNDF2.x = CND(f2.x);
+                CNDF2.y = CND(f2.y);
+                CNDF2.z = CND(f2.z);
+                CNDF2.w = CND(f2.w);
 
-                #region blackscholesy
-                float sqrtTY, expRTY;
-                float f1Y, f2Y, CNDF1Y, CNDF2Y;
+                expRT.x = Expf(-RISKFREE * years.x);
+                expRT.y = Expf(-RISKFREE * years.y);
+                expRT.z = Expf(-RISKFREE * years.z);
+                expRT.w = Expf(-RISKFREE * years.w);
+                call.x = price.x * CNDF1.x - strike.x * expRT.x * CNDF2.x;
+                call.y = price.y * CNDF1.y - strike.y * expRT.y * CNDF2.y;
+                call.z = price.z * CNDF1.z - strike.z * expRT.z * CNDF2.z;
+                call.w = price.w * CNDF1.w - strike.w * expRT.w * CNDF2.w;
+                put.x = strike.x * expRT.x * (1.0f - CNDF2.x) - price.x * (1.0f - CNDF1.x);
+                put.y = strike.y * expRT.y * (1.0f - CNDF2.y) - price.y * (1.0f - CNDF1.y);
+                put.z = strike.z * expRT.z * (1.0f - CNDF2.z) - price.z * (1.0f - CNDF1.z);
+                put.w = strike.w * expRT.w * (1.0f - CNDF2.w) - price.w * (1.0f - CNDF1.w);
 
-                sqrtTY = Sqrtf(optionYears[i].y);
-                f1Y = (Logf(stockPrice[i].y / optionStrike[i].y) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * optionYears[i].y) /
-                         (VOLATILITY * sqrtTY);
-                f2Y = f1Y - VOLATILITY * sqrtTY;
-
-                CNDF1Y = CND(f1Y);
-                CNDF2Y = CND(f2Y);
-
-                expRTY = Expf(-RISKFREE * optionYears[i].y);
-                callResult[i].y = stockPrice[i].y * CNDF1Y - optionStrike[i].y * expRTY * CNDF2Y;
-                putResult[i].y = optionStrike[i].y * expRTY * (1.0f - CNDF2Y) - stockPrice[i].y * (1.0f - CNDF1Y);
-                #endregion
-
-                #region blackscholesz
-                float sqrtTZ, expRTZ;
-                float f1Z, f2Z, CNDF1Z, CNDF2Z;
-
-                sqrtTZ = Sqrtf(optionYears[i].z);
-                f1Z = (Logf(stockPrice[i].z / optionStrike[i].z) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * optionYears[i].z) /
-                         (VOLATILITY * sqrtTZ);
-                f2Z = f1Z - VOLATILITY * sqrtTZ;
-
-                CNDF1Z = CND(f1Z);
-                CNDF2Z = CND(f2Z);
-
-                expRTZ = Expf(-RISKFREE * optionYears[i].z);
-                callResult[i].z = stockPrice[i].z * CNDF1Z - optionStrike[i].z * expRTZ * CNDF2Z;
-                putResult[i].z = optionStrike[i].z * expRTZ * (1.0f - CNDF2Z) - stockPrice[i].z * (1.0f - CNDF1Z);
-                #endregion
-
-                #region blackscholesw
-                float sqrtTW, expRTW;
-                float f1W, f2W, CNDF1W, CNDF2W;
-
-                sqrtTW = Sqrtf(optionYears[i].w);
-                f1W = (Logf(stockPrice[i].w / optionStrike[i].w) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * optionYears[i].w) /
-                         (VOLATILITY * sqrtTW);
-                f2W = f1W - VOLATILITY * sqrtTW;
-
-                CNDF1W = CND(f1W);
-                CNDF2W = CND(f2W);
-
-                expRTW = Expf(-RISKFREE * optionYears[i].w);
-                callResult[i].w = stockPrice[i].w * CNDF1W - optionStrike[i].w * expRTW * CNDF2W;
-                putResult[i].w = optionStrike[i].w * expRTW * (1.0f - CNDF2W) - stockPrice[i].w * (1.0f - CNDF1W);
-                #endregion
-
+                callResult[i] = call;
+                putResult[i] = put;
             }
         }
 
-        [Kernel]
+        [Kernel, HybridArithmeticFunction, HybridNakedFunction]
         static float CND(float f)
         {
             const float A1 = 0.31938153f;
