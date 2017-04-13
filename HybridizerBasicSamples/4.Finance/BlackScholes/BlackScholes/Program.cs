@@ -12,7 +12,7 @@ namespace BlackScholes
     class Program
     {
         const int OPT_N = 4000000;
-        const int NUM_ITERATIONS = 1;
+        const int NUM_ITERATIONS = 256;
 
         const int OPT_SZ = OPT_N * sizeof(float);
         const float RISKFREE = 0.02f;

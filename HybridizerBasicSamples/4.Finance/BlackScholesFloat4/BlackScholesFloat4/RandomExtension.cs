@@ -18,6 +18,11 @@ namespace BlackScholesFloat4
         {
             return new float4(a.NextFloat(min, max), a.NextFloat(min, max), a.NextFloat(min, max), a.NextFloat(min, max));
         }
+
+        public static float2 NextFloat2(this Random a, float min, float max)
+        {
+            return new float2(a.NextFloat(min, max), a.NextFloat(min, max));
+        }
     }
 
 }

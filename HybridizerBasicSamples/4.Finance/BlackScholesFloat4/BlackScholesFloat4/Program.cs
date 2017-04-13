@@ -12,7 +12,7 @@ namespace BlackScholesFloat4
     class Program
     {
         const int OPT_N = 4000000;
-        const int NUM_ITERATIONS = 512;
+        const int NUM_ITERATIONS = 256;
 
         const int OPT_SZ = OPT_N * sizeof(float);
         const float RISKFREE = 0.02f;
@@ -84,25 +84,37 @@ namespace BlackScholesFloat4
             return Math.Abs(f);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("expf")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("__expf")]
         public static float Expf(float f)
         {
             return (float)Math.Exp((double)f);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("sqrtf")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("__sqrtf")]
         public static float Sqrtf(float f)
         {
             return (float)Math.Sqrt((double)f);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("logf")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("rsqrtf")]
+        public static float rsqrtf(float f)
+        {
+            return 1.0F / (float)Math.Sqrt((double)f);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("__logf")]
         public static float Logf(float f)
         {
             return (float)Math.Log((double)f);
         }
 
-        [EntryPoint, LaunchBounds(256, 4)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("__fdividef")]
+        public static float __fdividef(float a, float b)
+        {
+            return a / b;
+        }
+
+        [EntryPoint]
         public static void BlackScholes(
             float4[] callResult,
             float4[] putResult,
@@ -123,27 +135,21 @@ namespace BlackScholesFloat4
                 float4 call = new float4();
                 float4 put = new float4();
 
-                sqrtT.x = Sqrtf(years.x);
-                sqrtT.y = Sqrtf(years.y);
-                sqrtT.z = Sqrtf(years.z);
-                sqrtT.w = Sqrtf(years.w);
-                f1.x = (Logf(price.x / strike.x) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * years.x) / (VOLATILITY * sqrtT.x);
-                f1.y = (Logf(price.y / strike.y) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * years.y) / (VOLATILITY * sqrtT.y);
-                f1.z = (Logf(price.z / strike.z) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * years.z) / (VOLATILITY * sqrtT.z);
-                f1.w = (Logf(price.w / strike.w) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * years.w) / (VOLATILITY * sqrtT.w);
+                sqrtT.x = __fdividef(1.0F, rsqrtf(years.x));
+                sqrtT.y = __fdividef(1.0F, rsqrtf(years.y));
+                sqrtT.z = __fdividef(1.0F, rsqrtf(years.z));
+                sqrtT.w = __fdividef(1.0F, rsqrtf(years.w));
+                f1.x = __fdividef((Logf(__fdividef(price.x, strike.x)) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * years.x), VOLATILITY * sqrtT.x);
+                f1.y = __fdividef((Logf(__fdividef(price.y, strike.y)) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * years.y), VOLATILITY * sqrtT.y);
+                f1.z = __fdividef((Logf(__fdividef(price.z, strike.z)) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * years.z), VOLATILITY * sqrtT.z);
+                f1.w = __fdividef((Logf(__fdividef(price.w, strike.w)) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * years.w), VOLATILITY * sqrtT.w);
                 f2.x = f1.x - VOLATILITY * sqrtT.x;
                 f2.y = f1.y - VOLATILITY * sqrtT.y;
                 f2.z = f1.z - VOLATILITY * sqrtT.z;
                 f2.w = f1.w - VOLATILITY * sqrtT.w;
 
-                CNDF1.x = CND(f1.x);
-                CNDF1.y = CND(f1.y);
-                CNDF1.z = CND(f1.z);
-                CNDF1.w = CND(f1.w);
-                CNDF2.x = CND(f2.x);
-                CNDF2.y = CND(f2.y);
-                CNDF2.z = CND(f2.z);
-                CNDF2.w = CND(f2.w);
+                CNDF1 = CND(f1);
+                CNDF2 = CND(f2);
 
                 expRT.x = Expf(-RISKFREE * years.x);
                 expRT.y = Expf(-RISKFREE * years.y);
@@ -164,7 +170,7 @@ namespace BlackScholesFloat4
         }
 
         [Kernel, HybridArithmeticFunction, HybridNakedFunction]
-        static float CND(float f)
+        static float4 CND(float4 f)
         {
             const float A1 = 0.31938153f;
             const float A2 = -0.356563782f;
@@ -173,13 +179,29 @@ namespace BlackScholesFloat4
             const float A5 = 1.330274429f;
             const float RSQRT2PI = 0.39894228040143267793994605993438f;
 
-            float K = 1.0f / (1.0f + 0.2316419f * fabsf(f));
+            float4 K, cnd;
+            K.x =  __fdividef(1.0F, 1.0f + 0.2316419f * fabsf(f.x));
+            K.y =  __fdividef(1.0F, 1.0f + 0.2316419f * fabsf(f.y));
+            K.z =  __fdividef(1.0F, 1.0f + 0.2316419f * fabsf(f.z));
+            K.w = __fdividef(1.0F, 1.0f + 0.2316419f * fabsf(f.w));
 
-            float cnd = RSQRT2PI * Expf(-0.5f * f * f) *
-                        (K * (A1 + K * (A2 + K * (A3 + K * (A4 + K * A5)))));
+            cnd.x = RSQRT2PI * Expf(-0.5f * f.x * f.x) *
+                        (K.x * (A1 + K.x * (A2 + K.x * (A3 + K.x * (A4 + K.x * A5)))));
+            cnd.y = RSQRT2PI * Expf(-0.5f * f.y * f.y) *
+                        (K.y * (A1 + K.y * (A2 + K.y * (A3 + K.y * (A4 + K.y * A5)))));
+            cnd.z = RSQRT2PI * Expf(-0.5f * f.z * f.z) *
+                        (K.z * (A1 + K.z * (A2 + K.z * (A3 + K.z * (A4 + K.z * A5)))));
+            cnd.w = RSQRT2PI * Expf(-0.5f * f.w * f.w) *
+                        (K.w * (A1 + K.w * (A2 + K.w * (A3 + K.w * (A4 + K.w * A5)))));
 
-            if (f > 0)
-                cnd = 1.0f - cnd;
+            if (f.x > 0.0F)
+                cnd.x = 1.0f - cnd.x;
+            if (f.y > 0.0F)
+                cnd.y = 1.0f - cnd.y;
+            if (f.z > 0.0F)
+                cnd.z = 1.0f - cnd.z;
+            if (f.w > 0.0F)
+                cnd.w = 1.0f - cnd.w;
 
             return cnd;
         }
