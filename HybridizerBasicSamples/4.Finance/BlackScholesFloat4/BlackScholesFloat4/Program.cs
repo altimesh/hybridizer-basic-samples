@@ -12,7 +12,7 @@ namespace BlackScholesFloat4
     class Program
     {
         const int OPT_N = 4000000;
-        const int NUM_ITERATIONS = 2;
+        const int NUM_ITERATIONS = 512;
 
         const int OPT_SZ = OPT_N * sizeof(float);
         const float RISKFREE = 0.02f;
@@ -35,18 +35,9 @@ namespace BlackScholesFloat4
             {
                 callResult_net[i] = new float4(0.0f, 0.0f, 0.0f, 0.0f);
                 putResult_net[i] = new float4(-1.0f, -1.0f, -1.0f, -1.0f) ;
-                stockPrice_net[i] = new float4((float)rand.NextDouble() * 25.0f + 5.0f,
-                                                 (float)rand.NextDouble() * 25.0f + 5.0f,
-                                                 (float)rand.NextDouble() * 25.0f + 5.0f,
-                                                 (float)rand.NextDouble() * 25.0f + 5.0f);
-                optionStrike_net[i] = new float4((float)rand.NextDouble() * 99.0f + 1.0f,
-                                                   (float)rand.NextDouble() * 99.0f + 1.0f,
-                                                   (float)rand.NextDouble() * 99.0f + 1.0f,
-                                                   (float)rand.NextDouble() * 99.0f + 1.0f);
-                optionYears_net[i] = new float4((float)rand.NextDouble() * 9.75f + 0.25f,
-                                                (float)rand.NextDouble() * 9.75f + 0.25f,
-                                                (float)rand.NextDouble() * 9.75f + 0.25f,
-                                                (float)rand.NextDouble() * 9.75f + 0.25f);
+                stockPrice_net[i] = rand.NextFloat4(5.0f, 25.0f);
+                optionStrike_net[i] = rand.NextFloat4(1.0f, 99.0f);
+                optionYears_net[i] = rand.NextFloat4(0.25f, 9.75f);
             }
 
             HybRunner runner = HybRunner.Cuda("BlackScholesFloat4_CUDA.dll").SetDistrib(20, 256);
