@@ -35,9 +35,9 @@ namespace BlackScholesFloat4
             {
                 callResult_net[i] = new float4(0.0f, 0.0f, 0.0f, 0.0f);
                 putResult_net[i] = new float4(-1.0f, -1.0f, -1.0f, -1.0f) ;
-                stockPrice_net[i] = rand.NextFloat4(5.0f, 25.0f);
-                optionStrike_net[i] = rand.NextFloat4(1.0f, 99.0f);
-                optionYears_net[i] = rand.NextFloat4(0.25f, 9.75f);
+                stockPrice_net[i] = rand.NextFloat4(5.0f, 30.0f);
+                optionStrike_net[i] = rand.NextFloat4(1.0f, 100.0f);
+                optionYears_net[i] = rand.NextFloat4(0.25f, 10f);
             }
 
             HybRunner runner = HybRunner.Cuda("BlackScholesFloat4_CUDA.dll").SetDistrib(20, 256);
