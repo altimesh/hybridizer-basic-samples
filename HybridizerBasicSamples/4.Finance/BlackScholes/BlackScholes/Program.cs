@@ -1,0 +1,164 @@
+﻿using Hybridizer.Runtime.CUDAImports;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BlackScholes
+{
+    class Program
+    {
+        const int OPT_N = 4000000;
+        const int NUM_ITERATIONS = 512;
+
+        const int OPT_SZ = OPT_N * sizeof(float);
+        const float RISKFREE = 0.02f;
+        const float VOLATILITY = 0.30f;
+
+        static void Main(string[] args)
+        {
+            float[] callResult_net = new float[OPT_N];
+            float[] putResult_net = new float[OPT_N];
+            float[] stockPrice_net = new float[OPT_N];
+            float[] optionStrike_net = new float[OPT_N];
+            float[] optionYears_net = new float[OPT_N];
+
+            float[] callResult_cuda = new float[OPT_N];
+            float[] putResult_cuda = new float[OPT_N];
+
+            Stopwatch watch = new Stopwatch();
+            Random rand = new Random(Guid.NewGuid().GetHashCode());
+            for (int i = 0; i < OPT_N; ++i)
+            {
+                callResult_net[i] = 0.0f;
+                putResult_net[i] = -1.0f;
+                stockPrice_net[i] = (float)rand.NextDouble() * 25.0f + 5.0f;
+                optionStrike_net[i] = (float)rand.NextDouble() * 99.0f + 1.0f;
+                optionYears_net[i] = (float)rand.NextDouble() * 9.75f + 0.25f;
+            }
+
+            HybRunner runner = HybRunner.Cuda("BlackScholes_CUDA.dll").SetDistrib(20, 256);
+            dynamic wrapper = runner.Wrap(new Program());
+
+            watch.Start();
+            for (int i = 0; i < NUM_ITERATIONS; ++i)
+            {
+                wrapper.BlackScholes(callResult_cuda,
+                             putResult_cuda,
+                             stockPrice_net,
+                             optionStrike_net,
+                             optionYears_net,
+                             0, OPT_N);
+            }
+            watch.Stop();
+            Console.WriteLine("nb ms cuda     : {0}", watch.ElapsedMilliseconds / NUM_ITERATIONS);
+            Console.WriteLine("without memcpy : {0}", runner.LastKernelDuration.ElapsedMilliseconds);
+
+            watch.Restart();
+            for (int i = 0; i < NUM_ITERATIONS; ++i)
+            {
+                Parallel.For(0, OPT_N, (opt) =>
+                {
+                    BlackScholes(callResult_net,
+                                 putResult_net,
+                                 stockPrice_net,
+                                 optionStrike_net,
+                                 optionYears_net,
+                                 opt,
+                                 opt + 1);
+                });
+            }
+            watch.Stop();
+            Console.WriteLine("nb ms c#       : {0}", watch.ElapsedMilliseconds / NUM_ITERATIONS);
+
+            for (int i = 0; i < OPT_N; ++i)
+            {
+                if (Math.Abs(callResult_net[i] - callResult_cuda[i]) > 1.0e-4 && Math.Abs(putResult_net[i] - putResult_cuda[i]) > 1.0E-4)
+                {
+                    Console.Out.WriteLine("Error !");
+                     //Console.WriteLine(i +" callResult expected {0} got {1}\nPutResult expected {2} got {3}",callResult_net[i],callResult_cuda[i], putResult_net[i], putResult_cuda[i]);
+                }
+                   
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("fabs")]
+        public static float fabs(float f)
+        {
+            return Math.Abs(f);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("expf")]
+        public static float Exp(float f)
+        {
+            return (float)Math.Exp((double)f);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("sqrtf")]
+        public static float Sqrt(float f)
+        {
+            return (float)Math.Sqrt((double)f);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining), IntrinsicFunction("logf")]
+        public static float Log(float f)
+        {
+            return (float)Math.Log((double)f);
+        }
+
+        [EntryPoint]
+        public static void BlackScholes(
+            float[] callResult,
+            float[] putResult,
+            float[] stockPrice,
+            float[] optionStrike,
+            float[] optionYears,
+            int lineFrom,
+            int lineTo
+            )
+        {
+            for (int i = lineFrom + blockDim.x * blockIdx.x + threadIdx.x; i < lineTo; i += blockDim.x * gridDim.x)
+            {
+                float sqrtT, expRT;
+                float f1, f2, CNDF1, CNDF2;
+
+                sqrtT = Sqrt(optionYears[i]);
+                f1 = (Log(stockPrice[i] / optionStrike[i]) + (RISKFREE + 0.5f * VOLATILITY * VOLATILITY) * optionYears[i]) /
+                         (VOLATILITY * sqrtT);
+                f2 = f1 - VOLATILITY * sqrtT;
+
+                CNDF1 = CND(f1);
+                CNDF2 = CND(f2);
+
+                expRT = Exp(-RISKFREE * optionYears[i]);
+                callResult[i] = stockPrice[i] * CNDF1 - optionStrike[i] * expRT * CNDF2;
+                putResult[i] = optionStrike[i] * expRT * (1.0f - CNDF2) - stockPrice[i] * (1.0f - CNDF1);
+
+            }
+        }
+
+        [Kernel]
+        static float CND(float f)
+        {
+            const float A1 = 0.31938153f;
+            const float A2 = -0.356563782f;
+            const float A3 = 1.781477937f;
+            const float A4 = -1.821255978f;
+            const float A5 = 1.330274429f;
+            const float RSQRT2PI = 0.39894228040143267793994605993438f;
+
+            float K = 1.0f / (1.0f + 0.2316419f * fabs(f));
+
+            float cnd = RSQRT2PI * Exp(-0.5f * f * f) *
+                        (K * (A1 + K * (A2 + K * (A3 + K * (A4 + K * A5)))));
+
+            if (f > 0)
+                cnd = 1.0f - cnd;
+
+            return cnd;
+        }
+    }
+}
