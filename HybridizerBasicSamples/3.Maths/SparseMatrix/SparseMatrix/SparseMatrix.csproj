@@ -66,10 +66,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="VectorReader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomExtension.cs" />
     <Compile Include="SparseMatrix.cs" />
+    <Compile Include="SparseMatrixReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
