@@ -76,6 +76,8 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="crankseg_2.mtx" />
+    <None Include="HV15R.mtx" />
+    <None Include="pwtk.mtx" />
     <None Include="rma10.mtx" />
     <None Include="rma10_b.mtx" />
   </ItemGroup>
