@@ -71,7 +71,6 @@ namespace SparseMatrix
         private static void ReadVectorSize(string line, out int rowCount)
         {
             string[] lineSplitted = line.Split(' ');
-            Console.WriteLine(lineSplitted.Length);
             if (lineSplitted.Length != 2)
             {
                 throw new ApplicationException("cannot read matrix size");
