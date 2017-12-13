@@ -44,11 +44,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\HelloWorld\bin\x64\Debug</OutDir>
-    <TargetName>HelloWorld_CUDA8</TargetName>
+    <TargetName>HelloWorld_CUDA</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\HelloWorld\bin\x64\Release</OutDir>
-    <TargetName>HelloWorld_CUDA8</TargetName>
+    <TargetName>HelloWorld_CUDA</TargetName>
   </PropertyGroup>
   <PropertyGroup Label="HybridizerConfig" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <HybridizerFlavors>CUDA</HybridizerFlavors>

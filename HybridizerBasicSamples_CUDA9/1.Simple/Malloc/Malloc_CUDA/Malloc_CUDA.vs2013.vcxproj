@@ -43,11 +43,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\Malloc\bin\x64\Debug</OutDir>
-    <TargetExt>Malloc_CUDA</TargetExt>
+    <TargetExt>.dll</TargetExt>
+    <TargetName>Malloc_CUDA</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>..\Malloc\bin\x64\Release</OutDir>
-    <TargetExt>Malloc_CUDA</TargetExt>
+    <TargetExt>.dll</TargetExt>
+    <TargetName>Malloc_CUDA</TargetName>
   </PropertyGroup>
   <PropertyGroup Label="HybridizerConfig" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <HybridizerFlavors>CUDA</HybridizerFlavors>
