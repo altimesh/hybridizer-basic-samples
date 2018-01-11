@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Utils", "0.Utils", "{74C897E3-0223-44F9-ADAA-973710108819}"
 EndProject
@@ -66,6 +66,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sobel_Lock.vs2015", "2.Imaging\Sobel_Lock\Sobel_Lock\Sobel_Lock.vs2015.csproj", "{36D0E358-0EA8-4AF4-A61B-17D95DA22BB9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConjugateGradient.vs2015", "3.Maths\ConjugateGradient\ConjugateGradient\ConjugateGradient.vs2015.csproj", "{9844A49A-1CDC-4F66-8564-1D89130D2EA8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C1BFF4FF-96E6-4762-9EA1-67B4DF87F060} = {C1BFF4FF-96E6-4762-9EA1-67B4DF87F060}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonteCarloHeatEquation.vs2015", "3.Maths\MonteCarloHeatEquation\MonteCarloHeatEquation\MonteCarloHeatEquation.vs2015.csproj", "{08B9C56D-917F-44B0-99A8-6F715625D12F}"
 EndProject
