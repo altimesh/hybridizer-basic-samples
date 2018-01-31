@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Utils", "0.Utils", "{74C897E3-0223-44F9-ADAA-973710108819}"
 EndProject
@@ -66,6 +66,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sobel_Lock.vs2017", "2.Imaging\Sobel_Lock\Sobel_Lock\Sobel_Lock.vs2017.csproj", "{3E309830-8E1E-443E-810D-61CB4BC6A3D3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConjugateGradient.vs2017", "3.Maths\ConjugateGradient\ConjugateGradient\ConjugateGradient.vs2017.csproj", "{ABFB7BD3-3A2C-48D4-AD64-1C143542AAFA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C1BFF4FF-96E6-4762-9EA1-67B4DF87F060} = {C1BFF4FF-96E6-4762-9EA1-67B4DF87F060}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonteCarloHeatEquation.vs2017", "3.Maths\MonteCarloHeatEquation\MonteCarloHeatEquation\MonteCarloHeatEquation.vs2017.csproj", "{33F18D05-0E35-4FA4-B683-8FB66B4F2A43}"
 EndProject
@@ -157,6 +160,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlackScholesFloat4_CUDA.vs2
 	ProjectSection(ProjectDependencies) = postProject
 		{8DF6FAA7-682D-49E5-9D83-EFA49781BFFB} = {8DF6FAA7-682D-49E5-9D83-EFA49781BFFB}
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Intrinsics", "Intrinsics", "{07481BED-4D87-4B89-B542-7F32B83B87C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Intrinsics", "1.Simple\Intrinsics\Intrinsics\Intrinsics.csproj", "{C039CEB0-582F-4A5A-8568-EC4E15B7BD2E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Intrinsics_CUDA.vs2017", "1.Simple\Intrinsics\Intrinsics_CUDA\Intrinsics_CUDA.vs2017.vcxproj", "{729CBB6A-7F61-46BF-B996-20540F21CB84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -292,6 +301,10 @@ Global
 		{5D3CBBCD-ACFF-4AE8-8586-E4AD63E1FFAC}.Debug|x64.Build.0 = Debug|x64
 		{5D3CBBCD-ACFF-4AE8-8586-E4AD63E1FFAC}.Release|x64.ActiveCfg = Release|x64
 		{5D3CBBCD-ACFF-4AE8-8586-E4AD63E1FFAC}.Release|x64.Build.0 = Release|x64
+		{C039CEB0-582F-4A5A-8568-EC4E15B7BD2E}.Debug|x64.ActiveCfg = Debug|x64
+		{C039CEB0-582F-4A5A-8568-EC4E15B7BD2E}.Release|x64.ActiveCfg = Release|x64
+		{729CBB6A-7F61-46BF-B996-20540F21CB84}.Debug|x64.ActiveCfg = Debug|x64
+		{729CBB6A-7F61-46BF-B996-20540F21CB84}.Release|x64.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -346,6 +359,9 @@ Global
 		{97B4AAA9-3D66-4A00-B134-CDDD769861F2} = {259B09D3-7BAE-4C86-ABED-D03E4A74765D}
 		{87C80BDB-9F37-484E-B7A9-44803DBD992E} = {72B6885D-86DC-44F1-87A6-750AD6CECD9C}
 		{5D3CBBCD-ACFF-4AE8-8586-E4AD63E1FFAC} = {B0769215-D37A-4A5F-917E-C3C31AC4BE6D}
+		{07481BED-4D87-4B89-B542-7F32B83B87C0} = {5B5F2A33-A4F5-4332-AC71-C9956B368F83}
+		{C039CEB0-582F-4A5A-8568-EC4E15B7BD2E} = {07481BED-4D87-4B89-B542-7F32B83B87C0}
+		{729CBB6A-7F61-46BF-B996-20540F21CB84} = {07481BED-4D87-4B89-B542-7F32B83B87C0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {81B44530-F0F7-4706-A0C4-0A187915202E}
