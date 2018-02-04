@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace Intrinsics
 {
+    /// <summary>
+    /// Compute capability >= 5.3 only
+    /// </summary>
     class Program
     {
         public static half2 getHalf2(float x)
