@@ -172,6 +172,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Streams", "5.CUDA runtime\S
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Streams_CUDA", "5.CUDA runtime\Streams\Streams_CUDA\Streams_CUDA.vcxproj", "{145C3A01-4EAE-430A-8008-1B8E8DFAC032}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Textures and Surfaces", "Textures and Surfaces", "{CDFFF4C1-2777-42D7-9BCB-6F19B393310B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Textures and Surfaces", "5.CUDA runtime\Textures and Surfaces\Textures and Surfaces\Textures and Surfaces.csproj", "{4D731CFF-DE7D-488B-930D-5A22CEDD33BC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Textures and Surfaces_CUDA", "5.CUDA runtime\Textures and Surfaces\Textures and Surfaces_CUDA\Textures and Surfaces_CUDA.vcxproj", "{4E6DEDE2-EB17-4926-9434-BEF8CFCB4B24}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedResources", "SharedResources", "{203427B2-94C6-49A7-9E1E-87384BEF243C}"
+	ProjectSection(SolutionItems) = preProject
+		SharedResources\lena512.bmp = SharedResources\lena512.bmp
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -318,6 +329,14 @@ Global
 		{145C3A01-4EAE-430A-8008-1B8E8DFAC032}.Debug|x64.Build.0 = Debug|x64
 		{145C3A01-4EAE-430A-8008-1B8E8DFAC032}.Release|x64.ActiveCfg = Release|x64
 		{145C3A01-4EAE-430A-8008-1B8E8DFAC032}.Release|x64.Build.0 = Release|x64
+		{4D731CFF-DE7D-488B-930D-5A22CEDD33BC}.Debug|x64.ActiveCfg = Debug|x64
+		{4D731CFF-DE7D-488B-930D-5A22CEDD33BC}.Debug|x64.Build.0 = Debug|x64
+		{4D731CFF-DE7D-488B-930D-5A22CEDD33BC}.Release|x64.ActiveCfg = Release|x64
+		{4D731CFF-DE7D-488B-930D-5A22CEDD33BC}.Release|x64.Build.0 = Release|x64
+		{4E6DEDE2-EB17-4926-9434-BEF8CFCB4B24}.Debug|x64.ActiveCfg = Debug|x64
+		{4E6DEDE2-EB17-4926-9434-BEF8CFCB4B24}.Debug|x64.Build.0 = Debug|x64
+		{4E6DEDE2-EB17-4926-9434-BEF8CFCB4B24}.Release|x64.ActiveCfg = Release|x64
+		{4E6DEDE2-EB17-4926-9434-BEF8CFCB4B24}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -378,5 +397,8 @@ Global
 		{3C13C11E-E726-46CF-B257-43D4ED6FDB0F} = {587DEA85-E77D-4C61-8E01-B5EFB426780B}
 		{DD1F1EF5-7C4F-4AB6-ABF5-25A719C90CB5} = {3C13C11E-E726-46CF-B257-43D4ED6FDB0F}
 		{145C3A01-4EAE-430A-8008-1B8E8DFAC032} = {3C13C11E-E726-46CF-B257-43D4ED6FDB0F}
+		{CDFFF4C1-2777-42D7-9BCB-6F19B393310B} = {587DEA85-E77D-4C61-8E01-B5EFB426780B}
+		{4D731CFF-DE7D-488B-930D-5A22CEDD33BC} = {CDFFF4C1-2777-42D7-9BCB-6F19B393310B}
+		{4E6DEDE2-EB17-4926-9434-BEF8CFCB4B24} = {CDFFF4C1-2777-42D7-9BCB-6F19B393310B}
 	EndGlobalSection
 EndGlobal
