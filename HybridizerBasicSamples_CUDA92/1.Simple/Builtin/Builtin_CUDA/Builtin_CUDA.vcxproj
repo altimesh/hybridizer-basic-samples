@@ -17,7 +17,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(VisualStudioVersion)' == '15.0'">
-    <MyToolset>v140</MyToolset>
+    <MyToolset>v141</MyToolset>
     <HybridizerInstallPath>$(Registry:HKEY_CURRENT_USER\Software\ALTIMESH\Hybridizer@vsixInstallPath.15.0)</HybridizerInstallPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(VisualStudioVersion)' == '14.0'">
@@ -47,7 +47,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 9.1.props" />
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 9.2.props" />
     <Import Project="$(HybridizerInstallPath)\vsintegration\Hybridizer.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -66,7 +66,7 @@
   <PropertyGroup Label="HybridizerConfig" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <HybridizerFlavors>CUDA</HybridizerFlavors>
     <HybridizerBuiltInFiles>$(HybridizerInstallPath)\include\hybridizer.cuda.builtins;$(ProjectDir)\hybridizer.builtins.xml</HybridizerBuiltInFiles>
-    <HybridizerJitterServicePath>$(HybridizerInstallPath)\bin\Hybridizer.PTXJitterService.9.1.exe</HybridizerJitterServicePath>
+    <HybridizerJitterServicePath>$(HybridizerInstallPath)\bin\Hybridizer.PTXJitterService.9.2.exe</HybridizerJitterServicePath>
     <HybridizerJitterServiceOptions>--gpu-architecture=auto;-G;--relocatable-device-code=false;-lineinfo;--std=c++11;-DNO_EXCEPTION</HybridizerJitterServiceOptions>
     <HybridizerDllFullPath>..\$(DotNetProjectName)\$(DotNetProjectName).csproj</HybridizerDllFullPath>
     <HybridizerBinaryPath>$(HybridizerInstallPath)\bin\Hybridizer.exe</HybridizerBinaryPath>
@@ -83,7 +83,7 @@
   <PropertyGroup Label="HybridizerConfig" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <HybridizerFlavors>CUDA</HybridizerFlavors>
     <HybridizerBuiltInFiles>$(HybridizerInstallPath)\include\hybridizer.cuda.builtins;$(ProjectDir)\hybridizer.builtins.xml</HybridizerBuiltInFiles>
-    <HybridizerJitterServicePath>$(HybridizerInstallPath)\bin\Hybridizer.PTXJitterService.9.1.exe</HybridizerJitterServicePath>
+    <HybridizerJitterServicePath>$(HybridizerInstallPath)\bin\Hybridizer.PTXJitterService.9.2.exe</HybridizerJitterServicePath>
     <HybridizerJitterServiceOptions>--gpu-architecture=auto;--relocatable-device-code=false;-lineinfo;--std=c++11;-DNO_EXCEPTION</HybridizerJitterServiceOptions>
     <HybridizerDllFullPath>..\$(DotNetProjectName)\$(DotNetProjectName).csproj</HybridizerDllFullPath>
     <HybridizerBinaryPath>$(HybridizerInstallPath)\bin\Hybridizer.exe</HybridizerBinaryPath>
@@ -166,7 +166,7 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 9.1.targets" />
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 9.2.targets" />
     <Import Project="$(HybridizerInstallPath)\vsintegration\Hybridizer.targets" />
   </ImportGroup>
 </Project>

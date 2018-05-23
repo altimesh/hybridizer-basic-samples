@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.2
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Utils", "0.Utils", "{74C897E3-0223-44F9-ADAA-973710108819}"
 EndProject
@@ -157,6 +157,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hybridizer_cuda_reduction", "Libraries\HybridizerCudaReduction\hybridizer_cuda_reduction.vcxproj", "{C1BFF4FF-96E6-4762-9EA1-67B4DF87F060}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloWorld_CUDA", "1.Simple\HelloWorld\HelloWorld_CUDA\HelloWorld_CUDA.vcxproj", "{8DF76B17-8149-4C3C-958F-6154F6FF66D0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{534C5ABA-6BC6-4023-BA56-77E691091530} = {534C5ABA-6BC6-4023-BA56-77E691091530}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Intrinsics", "Intrinsics", "{0E5F3CB8-CC62-4949-B1E8-7176BA349B80}"
 EndProject
@@ -171,12 +174,18 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Streams", "5.CUDA runtime\Streams\Streams\Streams.csproj", "{DD1F1EF5-7C4F-4AB6-ABF5-25A719C90CB5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Streams_CUDA", "5.CUDA runtime\Streams\Streams_CUDA\Streams_CUDA.vcxproj", "{145C3A01-4EAE-430A-8008-1B8E8DFAC032}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DD1F1EF5-7C4F-4AB6-ABF5-25A719C90CB5} = {DD1F1EF5-7C4F-4AB6-ABF5-25A719C90CB5}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Textures and Surfaces", "Textures and Surfaces", "{CDFFF4C1-2777-42D7-9BCB-6F19B393310B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Textures and Surfaces", "5.CUDA runtime\Textures and Surfaces\Textures and Surfaces\Textures and Surfaces.csproj", "{4D731CFF-DE7D-488B-930D-5A22CEDD33BC}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Textures and Surfaces_CUDA", "5.CUDA runtime\Textures and Surfaces\Textures and Surfaces_CUDA\Textures and Surfaces_CUDA.vcxproj", "{4E6DEDE2-EB17-4926-9434-BEF8CFCB4B24}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4D731CFF-DE7D-488B-930D-5A22CEDD33BC} = {4D731CFF-DE7D-488B-930D-5A22CEDD33BC}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedResources", "SharedResources", "{203427B2-94C6-49A7-9E1E-87384BEF243C}"
 	ProjectSection(SolutionItems) = preProject
@@ -188,12 +197,18 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstantMemory", "5.CUDA runtime\ConstantMemory\ConstantMemory\ConstantMemory.csproj", "{A1B63867-C65C-4EFC-84B1-7C8215195DC5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConstantMemory_CUDA", "5.CUDA runtime\ConstantMemory\ConstantMemory_CUDA\ConstantMemory_CUDA.vcxproj", "{F6A4A76C-2866-4071-963F-9A2BA7506389}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A1B63867-C65C-4EFC-84B1-7C8215195DC5} = {A1B63867-C65C-4EFC-84B1-7C8215195DC5}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Builtin", "Builtin", "{65AE592C-A395-46AE-A26B-A3B7B42E455B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Builtin", "1.Simple\Builtin\Builtin\Builtin.csproj", "{E6D5C931-4866-454D-BB7C-F819A1051DC2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Builtin_CUDA", "1.Simple\Builtin\Builtin_CUDA\Builtin_CUDA.vcxproj", "{85C61ACC-08B8-437C-8EA4-2D848BBF3982}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E6D5C931-4866-454D-BB7C-F819A1051DC2} = {E6D5C931-4866-454D-BB7C-F819A1051DC2}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -17,7 +17,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(VisualStudioVersion)' == '15.0'">
-    <MyToolset>v140</MyToolset>
+    <MyToolset>v141</MyToolset>
 	<HybridizerInstallPath>$(Registry:HKEY_CURRENT_USER\Software\ALTIMESH\Hybridizer@vsixInstallPath.15.0)</HybridizerInstallPath>
   </PropertyGroup>
     <PropertyGroup Condition="'$(VisualStudioVersion)' == '14.0'">
