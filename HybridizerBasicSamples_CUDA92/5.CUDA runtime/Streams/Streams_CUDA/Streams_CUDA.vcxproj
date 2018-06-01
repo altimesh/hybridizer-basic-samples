@@ -78,7 +78,7 @@
     <HybridizerDelegateSupport>false</HybridizerDelegateSupport>
     <HybridizerPlatform>x64</HybridizerPlatform>
     <HybridizerConfiguration>Debug</HybridizerConfiguration>
-    <HybridizerWorkingDirectory>hybridizer-generated-sources-trash</HybridizerWorkingDirectory>
+    <HybridizerWorkingDirectory>hybridizer-generated-sources</HybridizerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Label="HybridizerConfig" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <HybridizerFlavors>CUDA</HybridizerFlavors>
@@ -95,7 +95,7 @@
     <HybridizerDelegateSupport>false</HybridizerDelegateSupport>
     <HybridizerPlatform>x64</HybridizerPlatform>
     <HybridizerConfiguration>Release</HybridizerConfiguration>
-    <HybridizerWorkingDirectory>hybridizer-generated-sources-trash</HybridizerWorkingDirectory>
+    <HybridizerWorkingDirectory>hybridizer-generated-sources</HybridizerWorkingDirectory>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
