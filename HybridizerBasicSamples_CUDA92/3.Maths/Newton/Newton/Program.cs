@@ -142,7 +142,7 @@ namespace Hybridizer.Basic.Maths
             
             #endregion c#
 
-            HybRunner runner = HybRunner.Cuda("Newton_CUDA.dll").SetDistrib(32, 32, 16, 16, 1, 0);
+            HybRunner runner = HybRunner.Cuda().SetDistrib(32, 32, 16, 16, 1, 0);
             wrapper = runner.Wrap(new Program());
 
             #region cuda

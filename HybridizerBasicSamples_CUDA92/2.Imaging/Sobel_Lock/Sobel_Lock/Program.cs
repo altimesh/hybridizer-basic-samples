@@ -30,7 +30,7 @@ namespace Hybridizer.Basic.Imaging
             cuda.HostGetDevicePointer(out d_result, destData, cudaGetDevicePointerFlags.cudaReserved);
             
             // run the kernel
-            HybRunner runner = HybRunner.Cuda("Sobel_Lock_CUDA.dll").SetDistrib(32, 32, 16, 16, 1, 0);
+            HybRunner runner = HybRunner.Cuda().SetDistrib(32, 32, 16, 16, 1, 0);
             runner.Wrap(new Program()).ComputeSobel(d_result, d_input, baseImage.Width, baseImage.Height);
             cuda.DeviceSynchronize();
 

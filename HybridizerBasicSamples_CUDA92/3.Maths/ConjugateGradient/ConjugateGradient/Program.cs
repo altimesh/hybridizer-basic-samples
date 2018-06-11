@@ -16,7 +16,7 @@ namespace Hybridizer.Basic.Maths
             // configure CUDA
             cudaDeviceProp prop;
             cuda.GetDeviceProperties(out prop, 0);
-            runner = HybRunner.Cuda("ConjugateGradient_CUDA.dll").SetDistrib(prop.multiProcessorCount * 16, 128);
+            runner = HybRunner.Cuda().SetDistrib(prop.multiProcessorCount * 16, 128);
             wrapper = runner.Wrap(new Program());
 
             int size = 1000000; // very slow convergence with no preconditioner

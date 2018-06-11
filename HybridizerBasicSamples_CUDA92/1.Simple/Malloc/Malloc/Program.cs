@@ -72,7 +72,7 @@ namespace Malloc
             cudaDeviceProp prop;
             cuda.GetDeviceProperties(out prop, 0);
 
-            HybRunner runner = HybRunner.Cuda("Malloc_CUDA.dll").SetDistrib(prop.multiProcessorCount, 512);
+            HybRunner runner = HybRunner.Cuda().SetDistrib(prop.multiProcessorCount, 512);
             dynamic wrapper = runner.Wrap(new Program());
             wrapper.test(dst, src, N);
         }

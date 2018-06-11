@@ -23,7 +23,7 @@ namespace Hybridizer.Basic.Imaging
 
             ReadImage(inputPixels, baseImage, width, height);
 
-            HybRunner runner = HybRunner.Cuda("Sobel_CUDA.dll").SetDistrib(32, 32, 16, 16, 1, 0);
+            HybRunner runner = HybRunner.Cuda().SetDistrib(32, 32, 16, 16, 1, 0);
             dynamic wrapper = runner.Wrap(new Program());
 
             wrapper.ComputeSobel(outputPixels, inputPixels, width, height, 0, height);

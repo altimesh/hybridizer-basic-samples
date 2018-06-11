@@ -19,7 +19,7 @@ namespace MonteCarloHeatEquation
             cudaDeviceProp prop;
             cuda.GetDeviceProperties(out prop, 0);
 
-            HybRunner runner = HybRunner.Cuda("MonteCarloHeatEquation_CUDA.dll").SetDistrib(16 * prop.multiProcessorCount, 128);
+            HybRunner runner = HybRunner.Cuda().SetDistrib(16 * prop.multiProcessorCount, 128);
             var solver = new MonteCarloHeatSolver(problem);
             dynamic wrapped = runner.Wrap(solver);
             //solver.Solve();   // C# version

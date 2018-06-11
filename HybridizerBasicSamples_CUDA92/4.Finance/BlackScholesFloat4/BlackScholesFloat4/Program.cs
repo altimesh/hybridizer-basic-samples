@@ -44,7 +44,7 @@ namespace Hybridizer.Basic.Finance
 
             cudaDeviceProp prop;
             cuda.GetDeviceProperties(out prop, 0);
-            HybRunner runner = HybRunner.Cuda("BlackScholesFloat4_CUDA.dll").SetDistrib(8 * prop.multiProcessorCount, 256);
+            HybRunner runner = HybRunner.Cuda().SetDistrib(8 * prop.multiProcessorCount, 256);
             dynamic wrapper = runner.Wrap(new Program());
             
             for (int i = 0; i < NUM_ITERATIONS; ++i)

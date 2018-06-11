@@ -20,7 +20,7 @@ namespace HelloWorld
             int[] a = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
 
             // create an instance of HybRunner object to wrap calls on GPU
-            HybRunner runner = HybRunner.Cuda("SimplePrintf_CUDA.dll").SetDistrib(4,4);
+            HybRunner runner = HybRunner.Cuda().SetDistrib(4,4);
 
             // create a wrapper object to call GPU methods instead of C#
             dynamic wrapped = runner.Wrap(new Program());
