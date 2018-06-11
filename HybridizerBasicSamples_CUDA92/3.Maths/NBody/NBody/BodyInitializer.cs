@@ -74,29 +74,5 @@ namespace NBody
         {
             return Rand(0.6f, 0.7f); //[0.7, 0.13]
         }
-
-        static float4 Position(int i)
-        {
-            if (i < NumBodies / 2)
-            {
-                return new float4(RandP() + 0.5f * PScale, RandP(), RandP() + 50.0f, RandM());
-            }
-            else
-            {
-                return new float4(RandP() - 0.5f * PScale, RandP(), RandP() + 50.0f, RandM());
-            }
-        }
-
-        static float4 Velocity(float4 position, int i)
-        {
-            if (i < NumBodies / 2)
-            {
-                return new float4(RandV(), RandV() + 0.01f * VScale * position.x * position.x, RandV(), position.w);
-            }
-            else
-            {
-                return new float4(RandV(), RandV() - 0.01f * VScale * position.x * position.x, RandV(), position.w);
-            }
-        }
     }
 }
