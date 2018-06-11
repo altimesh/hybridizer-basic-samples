@@ -45,7 +45,7 @@ namespace Hybridizer.Basic.Maths
 
             #region CUDA 
 
-            HybRunner runner = HybRunner.Cuda("NaiveMatrix_CUDA.dll").SetDistrib(4, 5, 8, 32, 32, 0);
+            HybRunner runner = HybRunner.Cuda().SetDistrib(4, 5, 8, 32, 32, 0);
             dynamic wrapper = runner.Wrap(new Program());
             
             for (int i = 0; i < redo; ++i)

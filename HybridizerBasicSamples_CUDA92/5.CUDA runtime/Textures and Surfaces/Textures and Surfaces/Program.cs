@@ -9,7 +9,7 @@ namespace Textures_and_Surfaces
     {
         unsafe static void Main(string[] args)
         {
-            HybRunner runner = HybRunner.Cuda(@"Textures and Surfaces_CUDA.dll").SetDistrib(32, 32, 16, 16, 1, 0);
+            HybRunner runner = HybRunner.Cuda().SetDistrib(32, 32, 16, 16, 1, 0);
             Bitmap baseImage = (Bitmap)Image.FromFile("lena512.bmp");
             int height = baseImage.Height, width = baseImage.Width;
 

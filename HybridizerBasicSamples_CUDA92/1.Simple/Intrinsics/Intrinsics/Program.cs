@@ -56,7 +56,7 @@ namespace Intrinsics
                 Environment.Exit(6); // abort
             }
 
-            HybRunner runner = HybRunner.Cuda("Intrinsics_CUDA.dll").SetDistrib(16 * prop.multiProcessorCount, 128);
+            HybRunner runner = HybRunner.Cuda().SetDistrib(16 * prop.multiProcessorCount, 128);
             dynamic wrapped = runner.Wrap(new Program());
             wrapped.Compute(input, N);
             Console.WriteLine(cuda.GetErrorString(cuda.DeviceSynchronize()));

@@ -34,7 +34,7 @@ namespace HelloWorld
 
             cudaDeviceProp prop;
             cuda.GetDeviceProperties(out prop, 0);
-            HybRunner runner = HybRunner.Cuda("HelloWorld_CUDA.dll").SetDistrib(prop.multiProcessorCount * 16, 128);
+            HybRunner runner = HybRunner.Cuda().SetDistrib(prop.multiProcessorCount * 16, 128);
 
             // create a wrapper object to call GPU methods instead of C#
             dynamic wrapped = runner.Wrap(new Program());

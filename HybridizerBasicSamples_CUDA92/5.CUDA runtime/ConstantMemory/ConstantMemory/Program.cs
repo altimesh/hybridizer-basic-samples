@@ -38,7 +38,7 @@ namespace ConstantMemory
                 output[k] = (float)rand.NextDouble();
             }
 
-            HybRunner runner = HybRunner.Cuda("ConstantMemory_CUDA.dll");
+            HybRunner runner = HybRunner.Cuda();
 
             // create a wrapper object to call GPU methods instead of C#
             dynamic wrapped = runner.Wrap(new Program());

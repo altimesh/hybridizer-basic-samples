@@ -80,7 +80,7 @@ namespace Mandelbrot
             }
             #endregion c#
 
-            HybRunner runner = HybRunner.Cuda("Mandelbrot_CUDA.dll").SetDistrib(32, 32, 16, 16, 1, 0);
+            HybRunner runner = HybRunner.Cuda().SetDistrib(32, 32, 16, 16, 1, 0);
             wrapper = runner.Wrap(new Program());
             // profile with nsight to get performance
             #region cuda
