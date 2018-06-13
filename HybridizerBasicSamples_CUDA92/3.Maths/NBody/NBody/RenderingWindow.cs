@@ -81,7 +81,7 @@ namespace NBody
                 }
 
                 GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-                cuda.ERROR_CHECK(CUDA_GL_Interop.cudaGLRegisterBufferObject(buffer));
+                cuda.ERROR_CHECK(cuda.GLRegisterBufferObject(buffer));
             }
         }
 
@@ -90,7 +90,7 @@ namespace NBody
             for (var i = 0; i < _buffers.Length; i++)
             {
                 var res = IntPtr.Zero;
-                cuda.ERROR_CHECK(CUDA_GL_Interop.cudaGraphicsGLRegisterBuffer(out res, _buffers[i], 0u));
+                cuda.ERROR_CHECK(cuda.GraphicsGLRegisterBuffer(out res, _buffers[i], 0u));
                 _resources[i] = res;
             }
         }
@@ -190,17 +190,17 @@ namespace NBody
 
         void MapResources (out IntPtr a, out IntPtr b)
         {
-            cuda.ERROR_CHECK(CUDA_GL_Interop.cudaGraphicsResourceSetMapFlags(_resources[0], 1)); // readonly 
-            cuda.ERROR_CHECK(CUDA_GL_Interop.cudaGraphicsResourceSetMapFlags(_resources[1], 2)); // write discard
-            cuda.ERROR_CHECK(CUDA_GL_Interop.cudaGraphicsMapResources(2, _resources, cudaStream_t.NO_STREAM));
+            cuda.ERROR_CHECK(cuda.GraphicsResourceSetMapFlags(_resources[0], 1)); // readonly 
+            cuda.ERROR_CHECK(cuda.GraphicsResourceSetMapFlags(_resources[1], 2)); // write discard
+            cuda.ERROR_CHECK(cuda.GraphicsMapResources(2, _resources, cudaStream_t.NO_STREAM));
             size_t bytesa, bytesb;
-            cuda.ERROR_CHECK(CUDA_GL_Interop.cudaGraphicsResourceGetMappedPointer(out a, out bytesa, _resources[0]));
-            cuda.ERROR_CHECK(CUDA_GL_Interop.cudaGraphicsResourceGetMappedPointer(out b, out bytesb, _resources[1]));
+            cuda.ERROR_CHECK(cuda.GraphicsResourceGetMappedPointer(out a, out bytesa, _resources[0]));
+            cuda.ERROR_CHECK(cuda.GraphicsResourceGetMappedPointer(out b, out bytesb, _resources[1]));
         }
 
         void UnMapResources()
         {
-            cuda.ERROR_CHECK(CUDA_GL_Interop.cudaGraphicsUnmapResources(2, _resources, cudaStream_t.NO_STREAM));
+            cuda.ERROR_CHECK(cuda.GraphicsUnmapResources(2, _resources, cudaStream_t.NO_STREAM));
         }
 
         void SwapPos()
@@ -219,11 +219,11 @@ namespace NBody
         {
             foreach (var resource in _resources)
             {
-                cuda.ERROR_CHECK(CUDA_GL_Interop.cudaGraphicsUnregisterResource(resource));
+                cuda.ERROR_CHECK(cuda.GraphicsUnregisterResource(resource));
             }
             foreach (var buffer in _buffers)
             {
-                cuda.ERROR_CHECK(CUDA_GL_Interop.cudaGLUnregisterBufferObject(buffer));
+                cuda.ERROR_CHECK(cuda.GLUnregisterBufferObject(buffer));
             }
             if (_buffers.Length > 0)
             {
