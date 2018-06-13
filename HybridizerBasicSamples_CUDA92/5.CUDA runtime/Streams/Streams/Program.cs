@@ -28,8 +28,6 @@ namespace Streams
                 cuda.StreamCreate(out streams[k]);
             }
 
-            HybRunner.saveAssembly();
-
             int N = 1024 * 1024 * 32;
             IntPtr d_a, d_b; // device pointers
             float[] a = new float[N];
