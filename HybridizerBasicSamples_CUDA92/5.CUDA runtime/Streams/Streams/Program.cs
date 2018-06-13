@@ -22,16 +22,10 @@ namespace Streams
         {
             int nStreams = 8;
             cudaStream_t[] streams = new cudaStream_t[nStreams];
-            HybRunner[] runners = new HybRunner[nStreams];
-            dynamic[] wrapped = new dynamic[nStreams];
-            cudaDeviceProp prop;
-            cuda.GetDeviceProperties(out prop, 0);
+            dynamic wrapped = HybRunner.Cuda().Wrap(new Program());
             for (int k = 0; k < nStreams; ++k)
             {
                 cuda.StreamCreate(out streams[k]);
-
-                runners[k] = HybRunner.Cuda("Streams_CUDA.dll", streams[k], CudaMarshaler.Instance).SetDistrib(16 * prop.multiProcessorCount, 128);
-                wrapped[k] = runners[k].Wrap(new Program());
             }
 
             int N = 1024 * 1024 * 32;
@@ -59,13 +53,14 @@ namespace Streams
 
             cuda.Memcpy(d_a, h_a, N * sizeof(float), cudaMemcpyKind.cudaMemcpyHostToDevice);
             cuda.Memcpy(d_b, h_b, N * sizeof(float), cudaMemcpyKind.cudaMemcpyHostToDevice);
-
+            
             for (int k = 0; k < nStreams; ++k)
             {
                 int start = k * slice;
                 int stop = start + slice;
-                wrapped[k].Add(d_a, d_b, start, stop, 100);
+                wrapped.SetStream(streams[k]).Add(d_a, d_b, start, stop, 100);
             }
+
             for (int k = 0; k < nStreams; ++k)
             {
                 int start = k * slice;
