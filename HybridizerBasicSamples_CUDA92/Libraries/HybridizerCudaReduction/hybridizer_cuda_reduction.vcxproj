@@ -30,7 +30,7 @@
     <HybridizerInstallPath>$(Registry:HKEY_CURRENT_USER\Software\ALTIMESH\Hybridizer@vsixInstallPath.14.0)</HybridizerInstallPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(VisualStudioVersion)' == '15.0'">
-    <CrossVersionToolset>v141</CrossVersionToolset>
+    <CrossVersionToolset>v140</CrossVersionToolset>
     <HybridizerInstallPath>$(Registry:HKEY_CURRENT_USER\Software\ALTIMESH\Hybridizer@vsixInstallPath.15.0)</HybridizerInstallPath>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
