@@ -20,7 +20,7 @@ namespace ConstantMemory
                 float tmp = 0;
                 for(int p = -2; p <= 2; ++p)
                 {
-                    tmp += data[k + 2] * input[k];
+                    tmp += data[p + 2] * input[k];
                 }
 
                 output[k] = tmp;
