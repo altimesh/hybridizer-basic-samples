@@ -1,6 +1,7 @@
-﻿using Hybridizer.Runtime.CUDAImports;
+using Hybridizer.Runtime.CUDAImports;
 using System;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace Streams
 {
@@ -9,20 +10,19 @@ namespace Streams
         [EntryPoint]
         public static void Add(float[] a, float[] b, int start, int stop)
         {
-            for (int k = start + threadIdx.x + blockDim.x * blockIdx.x; k < stop; k += blockDim.x * gridDim.x)
+            Parallel.For(start, stop, i =>
             {
-                a[k] += b[k];
-            }
+                for(int i = 0; i < 100; ++i)
+                    a[i] += b[i];
+            });
         }
 
         unsafe static void Main(string[] args)
         {
             int nStreams = 8;
             cudaStream_t[] streams = new cudaStream_t[nStreams];
-            for (int k = 0; k < nStreams; ++k)
-            {
-                cuda.StreamCreate(out streams[k]);
-            }
+            
+            //create streams
 
             int N = 1024 * 1024 * 32;
             float[] a = new float[N];
@@ -48,32 +48,25 @@ namespace Streams
             cuda.Memcpy(d_a, h_a, N * sizeof(float), cudaMemcpyKind.cudaMemcpyHostToDevice);
             cuda.Memcpy(d_b, h_b, N * sizeof(float), cudaMemcpyKind.cudaMemcpyHostToDevice);
 
-            int slice = N / nStreams;
+            int slice = N / nStreams; // size of the array compute by each stream 
 
             dynamic wrapped = HybRunner.Cuda().Wrap(new Program());
+            int start;
+            int stop;
+            
+            // call kernel with each stream 
 
-            for (int k = 0; k < nStreams; ++k)
-            {
-                int start = k * slice;
-                int stop = start + slice;
-                wrapped.SetStream(streams[k]).Add(d_a, d_b, start, stop);
-            }
+            // copy data device to host
 
-            for (int k = 0; k < nStreams; ++k)
-            {
-                int start = k * slice;
-                cuda.MemcpyAsync(h_a + start * sizeof(float), d_a + start * sizeof(float), slice * sizeof(float), cudaMemcpyKind.cudaMemcpyDeviceToHost, streams[k]);
-            }
+            // synchronize and destroy streams
 
-            for (int k = 0; k < nStreams; ++k)
+            for (int i = 0; i < N; ++i)
             {
-                cuda.StreamSynchronize(streams[k]);
-                cuda.StreamDestroy(streams[k]);
-            }
-
-            for (int k = 0; k < 10; ++k)
-            {
-                Console.WriteLine(a[k]);
+                if (a[i] != (float)i + (1.0F * 100.0F))
+                {
+                    Console.Error.WriteLine("ERROR at {0} -- {1} != {2}", i, a[i], i + 1);
+                    Environment.Exit(6); // abort
+                }
             }
 
             handle_a.Free();

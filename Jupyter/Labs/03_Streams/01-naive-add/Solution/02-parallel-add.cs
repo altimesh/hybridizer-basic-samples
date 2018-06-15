@@ -1,13 +1,11 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
-using Hybridizer.Runtime.CUDAImports;
 
 namespace Stream
 {
     public class Program
     {
-        [EntryPoint]
-        public static void Add( float[] a, float[] b, int N)
+        public static void Add(float[] a, float[] b, int N)
         {
             Parallel.For(0, N, i =>
             {
@@ -27,11 +25,7 @@ namespace Stream
                 b[i] = 1.0F;
             }
 
-            dynamic wrapped = HybRunner.Cuda().Wrap(new Program());
-
-            wrapped.Add(a, b, N);
-
-            cuda.DeviceSynchronize(); 
+            Add(a, b, N);
 
             for (int i = 0; i < N; ++i)
             {

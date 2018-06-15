@@ -9,7 +9,10 @@ namespace Stream
         // decorate method here
         public static void Add( float[] a, float[] b, int N)
         {
-            //TODO : a += b  using threadIdx and BlockIdx
+            Parallel.For(0, N, i =>
+            {
+                a[i] += b[i];
+            });
         }
 
         public static void Main()
