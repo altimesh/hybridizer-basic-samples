@@ -1,6 +1,7 @@
 ﻿using Hybridizer.Runtime.CUDAImports;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -13,6 +14,11 @@ namespace Mandelbulb
         static void Main(string[] args)
         {
             Rendering.BitMap("mandelbulb.png", 1024, 1024);
+            try
+            {
+                Process.Start("mandelbulb.png");
+            }
+            catch { }
         }
     }
 }

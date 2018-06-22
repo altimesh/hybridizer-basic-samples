@@ -54,7 +54,9 @@ namespace Mandelbulb
             cuda.ERROR_CHECK(cuda.DeviceSynchronize());
             Stopwatch watch = new Stopwatch();
             watch.Start();
+
             wrapped.Render(imageData, width, height, viewDirection, nearFieldLocation, eyeLocation, lightDirection);
+
             cuda.ERROR_CHECK(cuda.GetLastError());
             cuda.ERROR_CHECK(cuda.DeviceSynchronize());
             watch.Stop();
