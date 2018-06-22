@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -12,11 +12,6 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <HybridizerPath Condition="'$(OS)' == 'Unix'">/opt/altimesh/hybridizer-essentials/bin/</HybridizerPath>
-    <HybridizerPath Condition="'$(OS)|$(VisualStudioVersion)' == 'Windows_NT|11.0'">$(registry:HKEY_CURRENT_USER\SOFTWARE\ALTIMESH\Hybridizer@vsixInstallPath.11.0)\bin\</HybridizerPath>
-    <HybridizerPath Condition="'$(OS)|$(VisualStudioVersion)' == 'Windows_NT|12.0'">$(registry:HKEY_CURRENT_USER\SOFTWARE\ALTIMESH\Hybridizer@vsixInstallPath.12.0)\bin\</HybridizerPath>
-    <HybridizerPath Condition="'$(OS)|$(VisualStudioVersion)' == 'Windows_NT|14.0'">$(registry:HKEY_CURRENT_USER\SOFTWARE\ALTIMESH\Hybridizer@vsixInstallPath.14.0)\bin\</HybridizerPath>
-    <HybridizerPath Condition="'$(OS)|$(VisualStudioVersion)' == 'Windows_NT|15.0'">$(registry:HKEY_CURRENT_USER\SOFTWARE\ALTIMESH\Hybridizer@vsixInstallPath.15.0)\bin\</HybridizerPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -39,9 +34,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hybridizer.Runtime.CUDAImports">
-      <HintPath>$(HybridizerPath)Hybridizer.Runtime.CUDAImports.dll</HintPath>
-    </Reference>
+    <Reference Include="Hybridizer.Runtime.CUDAImports" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
