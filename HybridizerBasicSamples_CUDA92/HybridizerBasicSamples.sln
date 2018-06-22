@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.2
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Utils", "0.Utils", "{74C897E3-0223-44F9-ADAA-973710108819}"
 EndProject
@@ -234,6 +234,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reduction", "1.Simple\Reduc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Reduction_CUDA", "1.Simple\Reduction\Reduction_CUDA\Reduction_CUDA.vcxproj", "{036456CF-A996-4911-8B67-33798E4D752F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mandelbulb", "Mandelbulb", "{68BD7D99-4C86-4B1F-B6A3-809B8AEE8D2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mandelbulb", "3.Maths\Mandelbulb\Mandelbulb\Mandelbulb.csproj", "{8E46349D-2A42-4BBE-A358-E1FB4664C7D3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mandelbulb_CUDA", "3.Maths\Mandelbulb\Mandelbulb_CUDA\Mandelbulb_CUDA.vcxproj", "{40EF4777-976F-4800-9EB0-4E095F5A9CE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -436,6 +442,14 @@ Global
 		{036456CF-A996-4911-8B67-33798E4D752F}.Debug|x64.Build.0 = Debug|x64
 		{036456CF-A996-4911-8B67-33798E4D752F}.Release|x64.ActiveCfg = Release|x64
 		{036456CF-A996-4911-8B67-33798E4D752F}.Release|x64.Build.0 = Release|x64
+		{8E46349D-2A42-4BBE-A358-E1FB4664C7D3}.Debug|x64.ActiveCfg = Debug|x64
+		{8E46349D-2A42-4BBE-A358-E1FB4664C7D3}.Debug|x64.Build.0 = Debug|x64
+		{8E46349D-2A42-4BBE-A358-E1FB4664C7D3}.Release|x64.ActiveCfg = Release|x64
+		{8E46349D-2A42-4BBE-A358-E1FB4664C7D3}.Release|x64.Build.0 = Release|x64
+		{40EF4777-976F-4800-9EB0-4E095F5A9CE4}.Debug|x64.ActiveCfg = Debug|x64
+		{40EF4777-976F-4800-9EB0-4E095F5A9CE4}.Debug|x64.Build.0 = Debug|x64
+		{40EF4777-976F-4800-9EB0-4E095F5A9CE4}.Release|x64.ActiveCfg = Release|x64
+		{40EF4777-976F-4800-9EB0-4E095F5A9CE4}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -517,6 +531,9 @@ Global
 		{3790F207-554C-4B70-9003-BB849B491AA1} = {5B5F2A33-A4F5-4332-AC71-C9956B368F83}
 		{0108A6AB-D7E3-4D15-AE6E-528C7012E3B9} = {3790F207-554C-4B70-9003-BB849B491AA1}
 		{036456CF-A996-4911-8B67-33798E4D752F} = {3790F207-554C-4B70-9003-BB849B491AA1}
+		{68BD7D99-4C86-4B1F-B6A3-809B8AEE8D2B} = {F08F3D68-C739-4F06-A7D1-FD9D435270C4}
+		{8E46349D-2A42-4BBE-A358-E1FB4664C7D3} = {68BD7D99-4C86-4B1F-B6A3-809B8AEE8D2B}
+		{40EF4777-976F-4800-9EB0-4E095F5A9CE4} = {68BD7D99-4C86-4B1F-B6A3-809B8AEE8D2B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0F397272-0E73-42D3-A8B0-66344B28521E}
