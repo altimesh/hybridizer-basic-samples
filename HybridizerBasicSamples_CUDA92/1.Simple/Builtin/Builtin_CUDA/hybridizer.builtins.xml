@@ -16,7 +16,7 @@
   <ReadBoundaries>
     <BuiltInBoundary DeclaringType="System.Threading.Interlocked" MethodName="Add">
       <MethodParameters>
-        <string>System.Int32</string>
+        <string>System.Int32&amp;</string>
         <string>System.Int32</string>
       </MethodParameters>
       <BoundaryEffect>
