@@ -13,21 +13,59 @@ namespace Mandelbulb
     {
         int textureID, shaderProgram, quadVAO;
         cudaSurfaceObject_t surface;
-        Rendering renderer;
+
+        public static float lightAngle = 140.0F;
+        public static float viewAngle = 150.0F;
+        public static float eyeDistanceFromNearField = 2.2F;
+        public float depth_of_field;
+        public float3 viewDirection;
+        public float3 nearFieldLocation;
+        public float3 eyeLocation;
+        public float3 lightDirection;
+        public int iterations = 300;
+        dynamic wrapped;
+
+        private void Init()
+        {
+            depth_of_field = 2.5F;
+            float rad = MathFunctions.toRad(lightAngle);
+            var lightX = MathFunctions.cosf(rad) * depth_of_field / 2;
+            var lightZ = MathFunctions.sinf(rad) * depth_of_field / 2;
+
+            float3 lightLocation = new float3(lightX, depth_of_field / 2, lightZ);
+            lightDirection = new float3(0.0F, 0.0F, 0.0F) - lightLocation;
+            MathFunctions.normalize(ref lightDirection);
+
+            float viewRad = MathFunctions.toRad(viewAngle);
+            float viewX = MathFunctions.cosf(viewRad) * depth_of_field / 2;
+            float viewZ = MathFunctions.sinf(viewRad) * depth_of_field / 2;
+
+            nearFieldLocation = new float3(viewX, 0.0F, viewZ);
+            viewDirection = new float3(0.0F, 0.0F, 0.0F) - nearFieldLocation;
+            MathFunctions.normalize(ref viewDirection);
+
+            float3 reverseDirection = viewDirection * eyeDistanceFromNearField;
+            MathFunctions.scalarMultiply(ref reverseDirection, eyeDistanceFromNearField);
+            eyeLocation = nearFieldLocation - reverseDirection;
+        }
 
         float[] quadVertices = {
-            // Positions        // Texture Coords
+            // Positions        // Texture Coordsg
             -1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
             -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
             1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
             1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
         };
         
-        public Program() : base(1024, 1024, GraphicsMode.Default, "Test", GameWindowFlags.Default)
+        public Program() : base(1024, 1024, GraphicsMode.Default, "Hybridizer Mandelbulb", GameWindowFlags.Default)
         {
             WindowBorder = WindowBorder.Fixed; // disable resize
+            Init();
+            HybRunner runner = HybRunner.Cuda().SetDistrib(32, 32, 16, 16, 1, 0);
+            wrapped = runner.Wrap(new Mandelbulb());
+            cuda.ERROR_CHECK(cuda.GetLastError());
+            cuda.ERROR_CHECK(cuda.DeviceSynchronize());
         }
-
 
         protected int LoadShaderProgram(string VSSource, string FSSource)
         {
@@ -110,19 +148,19 @@ namespace Mandelbulb
                 cudaChannelFormatDesc channelDescSurf = TextureHelpers.cudaCreateChannelDesc(32, 0, 0, 0, cudaChannelFormatKind.cudaChannelFormatKindUnsigned);
                 cudaResourceDesc resDescSurf = TextureHelpers.CreateCudaResourceDesc(array);
                 cuda.CreateSurfaceObject(out surface, ref resDescSurf);
-
-                renderer = new Rendering(2.5F);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
         }
-
-
+        
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            renderer.Texture(surface, Width, Height);
+            viewAngle += 0.5F;
+            lightAngle += 0.5F;
+            Init();
+            wrapped.Render(surface, Width, Height, iterations, viewDirection, nearFieldLocation, eyeLocation, lightDirection);
             cuda.ERROR_CHECK(cuda.GetLastError(), false);
             cuda.ERROR_CHECK(cuda.DeviceSynchronize(), false);
             GL.ClearColor(Color.Purple);

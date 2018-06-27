@@ -67,7 +67,6 @@
     <Compile Include="MathFunctions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rendering.cs" />
     <Compile Include="TextureHelper.cs" />
   </ItemGroup>
   <ItemGroup>
