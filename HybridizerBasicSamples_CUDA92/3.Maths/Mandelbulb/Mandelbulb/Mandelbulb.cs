@@ -63,7 +63,7 @@ namespace Mandelbulb
         }
 
         [EntryPoint]
-        public void Render(uchar4[] imageData, int cWidth, int cHeight, float3 viewDirection, float3 nearFieldLocation, float3 eyeLocation, float3 lightDirection)
+        public void Render(cudaSurfaceObject_t surface, int cWidth, int cHeight, float3 viewDirection, float3 nearFieldLocation, float3 eyeLocation, float3 lightDirection)
         {
             int cHalfWidth = cWidth / 2;
             float pixel = ((float) DEPTH_OF_FIELD) / (((cHeight + cWidth) / 2.0F));
@@ -177,18 +177,21 @@ namespace Mandelbulb
                         red = MathFunctions.clamp(red, 0, 255.0F);
                         green = MathFunctions.clamp(green, 0, 255.0F);
                         blue = MathFunctions.clamp(blue, 0, 255.0F);
-
-                        var pixels = ((y * cWidth) + x);
-                        imageData[pixels].x = (byte) red;
-                        imageData[pixels].y = (byte) green;
-                        imageData[pixels].z = (byte) blue;
+                        
+                        uchar4 color = new uchar4();
+                        color.x = (byte) red;
+                        color.y = (byte) green;
+                        color.z = (byte) blue;
+                        TextureHelpers.surf2Dwrite(color, surface, x * sizeof(int), y);
                     }
                     else
                     {
-                        var pixels = ((y * cWidth) + x);
-                        imageData[pixels].x = (byte) (155.0F + MathFunctions.clamp(iterations * 1.5F, 0.0F, 100.0F));
-                        imageData[pixels].y =  (byte) (205.0F + MathFunctions.clamp(iterations * 1.5F, 0.0F, 50.0F));
-                        imageData[pixels].z = 255;
+
+                        uchar4 color = new uchar4();
+                        color.x = (byte)(155.0F + MathFunctions.clamp(iterations * 1.5F, 0.0F, 100.0F));
+                        color.y = ((byte)(205.0F + MathFunctions.clamp(iterations * 1.5F, 0.0F, 50.0F)));
+                        color.z = 255;
+                        TextureHelpers.surf2Dwrite(color, surface, x * sizeof(int), y);
                     }
                 }
             }
