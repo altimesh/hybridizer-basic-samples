@@ -31,5 +31,6 @@ You should receive a subscription by mail. Copy this subscription in the appropr
 
 
 ## Run
-Go to [CLONE_DIR]\Jupyter\Labs and run:
+Open a Visual Studio command line (Developer Prompt for VS)  
+Go to [CLONE_DIR]\Jupyter\Labs and run:  
 `jupyter notebook`
