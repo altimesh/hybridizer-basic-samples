@@ -50,7 +50,7 @@ namespace MedianFilter
         
         static void Main(string[] args)
         {
-            GrayBitmap image = GrayBitmap.Load("../../../images/lena_highres_greyscale_noise.bmp");
+            GrayBitmap image = GrayBitmap.Load("../images/lena_highres_greyscale_noise.bmp");
             GrayBitmap denoised = new GrayBitmap(image.Width, image.Height) ;
             ushort[] input = image.PixelsUShort ;
             ushort[] output = new ushort[image.Width * image.Height];
