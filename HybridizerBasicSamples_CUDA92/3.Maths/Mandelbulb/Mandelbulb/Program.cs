@@ -192,7 +192,7 @@ namespace Mandelbulb
             {
                 averageFPS /= frameCounter;
                 averageKernelDuration /= frameCounter;
-                Console.Out.Write("\rKernel time : {0:N2} ms -- FPS : {0:N2}", averageKernelDuration, averageFPS);
+                Console.Out.Write("\rKernel time : {0:N2} ms -- FPS : {1:N2}", averageKernelDuration, averageFPS);
                 averageFPS = 0.0;
                 elapsedMS = 0;
                 frameCounter = 0;
