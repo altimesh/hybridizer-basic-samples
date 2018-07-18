@@ -2,6 +2,7 @@
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL4;
+using OpenTK.Input;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -23,6 +24,7 @@ namespace Mandelbulb
         public float3 eyeLocation;
         public float3 lightDirection;
         public int iterations = 300;
+        HybRunner runner;
         dynamic wrapped;
 
         private void Init()
@@ -61,7 +63,7 @@ namespace Mandelbulb
         {
             WindowBorder = WindowBorder.Fixed; // disable resize
             Init();
-            HybRunner runner = HybRunner.Cuda().SetDistrib(32, 32, 16, 16, 1, 0);
+            runner = HybRunner.Cuda().SetDistrib(32, 32, 16, 16, 1, 0);
             wrapped = runner.Wrap(new Mandelbulb());
             cuda.ERROR_CHECK(cuda.GetLastError());
             cuda.ERROR_CHECK(cuda.DeviceSynchronize());
@@ -154,9 +156,16 @@ namespace Mandelbulb
                 Console.WriteLine(ex.Message);
             }
         }
-        
+
+        private static double averageFPS = 0.0;
+        private static long elapsedMS = 0;
+        private static int frameCounter = 0;
+        private static Stopwatch stopwatch = new Stopwatch();
+        private static double averageKernelDuration = 0;
+
         protected override void OnRenderFrame(FrameEventArgs e)
         {
+            stopwatch.Start();
             viewAngle += 0.5F;
             lightAngle += 0.5F;
             Init();
@@ -173,6 +182,22 @@ namespace Mandelbulb
             GL.DrawArrays(PrimitiveType.TriangleStrip, 0, 4);
             GL.BindVertexArray(0);
             SwapBuffers();
+            stopwatch.Stop();
+            elapsedMS += stopwatch.ElapsedMilliseconds;
+            stopwatch.Reset();
+            averageFPS += RenderFrequency;
+            frameCounter += 1;
+            averageKernelDuration += runner.LastKernelDuration.ElapsedMilliseconds;
+            if (elapsedMS > 1000)
+            {
+                averageFPS /= frameCounter;
+                averageKernelDuration /= frameCounter;
+                Console.Out.Write("\rKernel time : {0:N2} ms -- FPS : {0:N2}", averageKernelDuration, averageFPS);
+                averageFPS = 0.0;
+                elapsedMS = 0;
+                frameCounter = 0;
+                averageKernelDuration = 0;
+            }
         }
 
         static void Main(string[] args)
@@ -181,7 +206,7 @@ namespace Mandelbulb
             {
                 using (Program p = new Program())
                 {
-                    p.Run(60);
+                    p.Run();
                 }
             }
             catch (Exception e)
