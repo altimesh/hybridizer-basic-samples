@@ -94,7 +94,7 @@ namespace MedianFilter
             cudaDeviceProp prop;
             cuda.GetDeviceProperties(out prop, currentDevice) ;
             
-            GrayBitmap image = GrayBitmap.Load("../images/lena_highres_greyscale_noise.bmp");
+            GrayBitmap image = GrayBitmap.Load("../../images/lena_highres_greyscale_noise.bmp");
             GrayBitmap denoised = new GrayBitmap(image.Width, image.Height) ;
             ushort[] input = image.PixelsUShort ;
             ushort[] output = new ushort[image.Width * image.Height];
@@ -128,7 +128,7 @@ namespace MedianFilter
             Console.WriteLine ($"SweepSort GPU time : {time}");
             Console.WriteLine ($"SweepSort GPU -- kernel time : {kernelTime}");
             denoised.PixelsUShort = output ;
-            denoised.Save ("../output-07-cache-aware-gpu/denoised.bmp");
+            denoised.Save ("../../output-07-cache-aware-gpu/denoised.bmp");
         }
     }
 }

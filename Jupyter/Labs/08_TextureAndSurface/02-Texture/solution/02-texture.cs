@@ -13,7 +13,7 @@ namespace TextureAndSurface
         {
             HybRunner runner = HybRunner.Cuda().SetDistrib(32, 32, 16, 16, 1, 0);
             
-            GrayBitmap image = GrayBitmap.Load("../images/lena512.bmp");
+            GrayBitmap image = GrayBitmap.Load("../../images/lena512.bmp");
             uint height = image.Height, width = image.Width;
             ushort[] inputPixels = image.PixelsUShort;
             
@@ -49,7 +49,7 @@ namespace TextureAndSurface
             }
             GrayBitmap imageSobel = new GrayBitmap(width, height);
             imageSobel.PixelsUShort = outputPixel;
-            imageSobel.Save("../output-02-texture/sobel.bmp");
+            imageSobel.Save("../../output-02-texture/sobel.bmp");
         }
 
         [EntryPoint]
