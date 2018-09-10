@@ -42,11 +42,25 @@ namespace MandelbrotRenderer
 
         const int W = 1024;
         const int H = 1024;
-        
+
+        // set the right values depending on your hardware / Hybridizer license
+        bool hasCUDA = true;
+        bool hasAVX = true;
+        bool hasAVX2 = true;
+        bool hasAVX512 = true;
+
         public Form1()
         {
             InitializeComponent();
-            DisplayGPUName();
+            CUDA.Enabled = hasCUDA;
+            AVX.Enabled = hasAVX;
+            AVX2.Enabled = hasAVX2;
+            AVX512.Enabled = hasAVX512;
+
+            if (hasCUDA)
+            {
+                DisplayGPUName();
+            }
 
             ManagementObjectSearcher mos = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");
             foreach (ManagementObject mo in mos.Get())
@@ -55,15 +69,15 @@ namespace MandelbrotRenderer
                 label4.Text = cpuName.Split('@')[0];
             }
 
-            runnerCUDA = HybRunner.Cuda("MandelbrotRenderer_CUDA.dll").SetDistrib(32, 32, 16, 16, 1, 0);
-            runnerAVX = HybRunner.AVX("MandelbrotRenderer_AVX.dll").SetDistrib(Environment.ProcessorCount, 32);
-            runnerAVX2 = HybRunner.AVX("MandelbrotRenderer_AVX2.dll").SetDistrib(Environment.ProcessorCount, 32);
-            runnerAVX512 = HybRunner.AVX512("MandelbrotRenderer_AVX512.dll").SetDistrib(Environment.ProcessorCount, 32);
+            if(hasCUDA)   runnerCUDA = HybRunner.Cuda("MandelbrotRenderer_CUDA.dll").SetDistrib(32, 32, 16, 16, 1, 0);
+            if(hasAVX)    runnerAVX = HybRunner.AVX("MandelbrotRenderer_AVX.dll").SetDistrib(Environment.ProcessorCount, 32);
+            if(hasAVX2)   runnerAVX2 = HybRunner.AVX("MandelbrotRenderer_AVX2.dll").SetDistrib(Environment.ProcessorCount, 32);
+            if(hasAVX512) runnerAVX512 = HybRunner.AVX512("MandelbrotRenderer_AVX512.dll").SetDistrib(Environment.ProcessorCount, 32);
 
-            MandelbrotCUDA = runnerCUDA.Wrap(new Mandelbrot());
-            MandelbrotAVX = runnerAVX.Wrap(new Mandelbrot());
-            MandelbrotAVX2 = runnerAVX2.Wrap(new Mandelbrot());
-            MandelbrotAVX512 = runnerAVX512.Wrap(new Mandelbrot());
+            if(hasCUDA)   MandelbrotCUDA = runnerCUDA.Wrap(new Mandelbrot());
+            if(hasAVX)    MandelbrotAVX = runnerAVX.Wrap(new Mandelbrot());
+            if(hasAVX2)   MandelbrotAVX2 = runnerAVX2.Wrap(new Mandelbrot());
+            if(hasAVX512) MandelbrotAVX512 = runnerAVX512.Wrap(new Mandelbrot());
 
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
