@@ -115,8 +115,6 @@
         echo copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
         copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
       </Command>
-      <Command>
-      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -130,7 +128,7 @@
       <EnableEnhancedInstructionSet>AdvancedVectorExtensions2</EnableEnhancedInstructionSet>
       <PreprocessorDefinitions>ENABLE_OPENMP;HYB_AVX2;NO_SVML;WIN32;WIN64;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Xclang -fopenmp  -Xclang -funroll-loops -mllvm -inline-threshold=10000 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Xclang -fopenmp  -Xclang -funroll-loops -mllvm -inline-threshold=10000 -Xclang -freg-struct-return -Xclang -finline-hint-functions %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>

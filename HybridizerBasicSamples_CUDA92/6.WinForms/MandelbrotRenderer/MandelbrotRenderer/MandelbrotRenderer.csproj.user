@@ -2,9 +2,11 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
-    <StartWorkingDirectory>W:\VsSolutions\Transcoder\Developers\rportalez\FractalRendering\FractalRenderer\bin\x64\Debug</StartWorkingDirectory>
-    <StartAction>Program</StartAction>
-    <StartProgram>W:\VsSolutions\Transcoder\Developers\rportalez\FractalRendering\FractalRenderer\bin\x64\Debug\FractalRenderer.exe</StartProgram>
+    <StartWorkingDirectory>
+    </StartWorkingDirectory>
+    <StartAction>Project</StartAction>
+    <StartProgram>
+    </StartProgram>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <StartAction>Project</StartAction>
