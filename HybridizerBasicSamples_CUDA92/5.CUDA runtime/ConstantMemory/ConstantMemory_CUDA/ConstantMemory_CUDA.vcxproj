@@ -18,21 +18,21 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(VisualStudioVersion)' == '15.0'">
     <MyToolset>v140</MyToolset>
-	<HybridizerInstallPath>$(Registry:HKEY_CURRENT_USER\Software\ALTIMESH\Hybridizer@vsixInstallPath.15.0)</HybridizerInstallPath>
+    <HybridizerInstallPath>$(Registry:HKEY_CURRENT_USER\Software\ALTIMESH\Hybridizer@vsixInstallPath.15.0)</HybridizerInstallPath>
   </PropertyGroup>
-    <PropertyGroup Condition="'$(VisualStudioVersion)' == '14.0'">
+  <PropertyGroup Condition="'$(VisualStudioVersion)' == '14.0'">
     <MyToolset>v140</MyToolset>
-	<HybridizerInstallPath>$(Registry:HKEY_CURRENT_USER\Software\ALTIMESH\Hybridizer@vsixInstallPath.14.0)</HybridizerInstallPath>
+    <HybridizerInstallPath>$(Registry:HKEY_CURRENT_USER\Software\ALTIMESH\Hybridizer@vsixInstallPath.14.0)</HybridizerInstallPath>
   </PropertyGroup>
-    <PropertyGroup Condition="'$(VisualStudioVersion)' == '12.0'">
+  <PropertyGroup Condition="'$(VisualStudioVersion)' == '12.0'">
     <MyToolset>v120</MyToolset>
-	<HybridizerInstallPath>$(Registry:HKEY_CURRENT_USER\Software\ALTIMESH\Hybridizer@vsixInstallPath.12.0)</HybridizerInstallPath>
+    <HybridizerInstallPath>$(Registry:HKEY_CURRENT_USER\Software\ALTIMESH\Hybridizer@vsixInstallPath.12.0)</HybridizerInstallPath>
   </PropertyGroup>
-    <PropertyGroup Condition="'$(VisualStudioVersion)' == '11.0'">
+  <PropertyGroup Condition="'$(VisualStudioVersion)' == '11.0'">
     <MyToolset>v110</MyToolset>
-	<HybridizerInstallPath>$(Registry:HKEY_CURRENT_USER\Software\ALTIMESH\Hybridizer@vsixInstallPath.11.0)</HybridizerInstallPath>
+    <HybridizerInstallPath>$(Registry:HKEY_CURRENT_USER\Software\ALTIMESH\Hybridizer@vsixInstallPath.11.0)</HybridizerInstallPath>
   </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
@@ -61,7 +61,7 @@
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup>
-    <DotNetProjectName>$([System.String]::Copy(&quot;ConstantMemory_CUDA&quot;).Replace(&quot;_CUDA&quot;,&quot;&quot;))</DotNetProjectName>
+    <DotNetProjectName>$([System.String]::Copy("ConstantMemory_CUDA").Replace("_CUDA",""))</DotNetProjectName>
   </PropertyGroup>
   <PropertyGroup Label="HybridizerConfig" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <HybridizerFlavors>CUDA</HybridizerFlavors>
@@ -107,17 +107,14 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>hybridizer.basic.runtime.lib;cuda.lib;cudart.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(HybridizerInstallPath)\bin;%(AdditionalLibraryDirectories);$(CudaToolkitLibDir)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(HybridizerInstallPath)\bin;$(HybridizerInstallPath)\lib;%(AdditionalLibraryDirectories);$(CudaToolkitLibDir)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>
-        echo copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
-        copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
-      </Command>
-      <Command>
-        echo copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
-        copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
-      </Command>
+            echo copy "$(CudaToolkitBinDir)\cudart *.dll" "$(OutDir)"
+            copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
+		    echo copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
+		    copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
@@ -137,17 +134,14 @@
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Console</SubSystem>
       <AdditionalDependencies>hybridizer.basic.runtime.lib;cuda.lib;cudart.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(HybridizerInstallPath)\bin;%(AdditionalLibraryDirectories);$(CudaToolkitLibDir)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(HybridizerInstallPath)\bin;$(HybridizerInstallPath)\lib;%(AdditionalLibraryDirectories);$(CudaToolkitLibDir)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>
-        echo copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
-        copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
-      </Command>
-      <Command>
-        echo copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
-        copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
-      </Command>
+            echo copy "$(CudaToolkitBinDir)\cudart *.dll" "$(OutDir)"
+            copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
+		    echo copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
+		    copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
