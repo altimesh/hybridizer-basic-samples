@@ -127,7 +127,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <PreprocessorDefinitions>ENABLE_OPENMP;HYB_MIC;NO_SVML;WIN32;WIN64;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Xclang -fopenmp  -Xclang -funroll-loops -mllvm -inline-threshold=10000 -Xclang -freg-struct-return -Xclang -finline-hint-functions   /arch:AVX512 -mavx512f  -mavx512bw %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Xclang -fopenmp  -Xclang -funroll-loops -mllvm -inline-threshold=10000 -Xclang -freg-struct-return -Xclang -finline-hint-functions -mavx512f  -mavx512bw %(AdditionalOptions)</AdditionalOptions>
       <DebugInformationFormat>None</DebugInformationFormat>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
