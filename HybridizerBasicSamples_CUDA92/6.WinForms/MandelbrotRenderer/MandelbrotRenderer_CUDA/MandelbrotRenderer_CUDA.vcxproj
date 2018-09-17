@@ -107,11 +107,10 @@
     </Link>
     <PostBuildEvent>
       <Command>
-        echo copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
-        copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
-        echo copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
-        copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
-      </Command>
+            echo copy "$(CudaToolkitBinDir)\cudart *.dll" "$(OutDir)"
+            copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
+		    echo copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
+		    copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
@@ -135,11 +134,10 @@
     </Link>
     <PostBuildEvent>
       <Command>
-        echo copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
-        copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
-        echo copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
-        copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
-      </Command>
+            echo copy "$(CudaToolkitBinDir)\cudart *.dll" "$(OutDir)"
+            copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
+		    echo copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
+		    copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
