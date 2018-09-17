@@ -215,30 +215,45 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "HelloVB", "1.Simple\HelloVB\HelloVB\HelloVB.vbproj", "{13D8DD63-B968-4379-BD6F-D2C244434288}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloVB_CUDA", "1.Simple\HelloVB\HelloVB_CUDA\HelloVB_CUDA.vcxproj", "{F2BB498E-B078-421A-9C00-1CB23B9749B7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{13D8DD63-B968-4379-BD6F-D2C244434288} = {13D8DD63-B968-4379-BD6F-D2C244434288}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NBody", "NBody", "{852D71DB-50A7-49E1-92A4-C6D3EF9A3766}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NBody", "3.Maths\NBody\NBody\NBody.csproj", "{7A3CA847-8A66-41DB-B27A-1C5F670DA01A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NBody_CUDA", "3.Maths\NBody\NBody_CUDA\NBody_CUDA.vcxproj", "{1C2B4037-9B77-4654-B90E-661A22AF4150}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7A3CA847-8A66-41DB-B27A-1C5F670DA01A} = {7A3CA847-8A66-41DB-B27A-1C5F670DA01A}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Recursion", "Recursion", "{9E607391-006C-47FA-B311-12AB54167E72}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recursion", "1.Simple\Recursion\Recursion\Recursion.csproj", "{9249EE7B-A664-41CB-AD2C-747885AAA25B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Recursion_CUDA", "1.Simple\Recursion\Recursion_CUDA\Recursion_CUDA.vcxproj", "{CC27971B-0CF2-4C80-AB0C-E97A84FA2253}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9249EE7B-A664-41CB-AD2C-747885AAA25B} = {9249EE7B-A664-41CB-AD2C-747885AAA25B}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Reduction", "Reduction", "{3790F207-554C-4B70-9003-BB849B491AA1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reduction", "1.Simple\Reduction\Reduction\Reduction.csproj", "{0108A6AB-D7E3-4D15-AE6E-528C7012E3B9}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Reduction_CUDA", "1.Simple\Reduction\Reduction_CUDA\Reduction_CUDA.vcxproj", "{036456CF-A996-4911-8B67-33798E4D752F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0108A6AB-D7E3-4D15-AE6E-528C7012E3B9} = {0108A6AB-D7E3-4D15-AE6E-528C7012E3B9}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mandelbulb", "Mandelbulb", "{68BD7D99-4C86-4B1F-B6A3-809B8AEE8D2B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mandelbulb", "3.Maths\Mandelbulb\Mandelbulb\Mandelbulb.csproj", "{8E46349D-2A42-4BBE-A358-E1FB4664C7D3}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mandelbulb_CUDA", "3.Maths\Mandelbulb\Mandelbulb_CUDA\Mandelbulb_CUDA.vcxproj", "{40EF4777-976F-4800-9EB0-4E095F5A9CE4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8E46349D-2A42-4BBE-A358-E1FB4664C7D3} = {8E46349D-2A42-4BBE-A358-E1FB4664C7D3}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
