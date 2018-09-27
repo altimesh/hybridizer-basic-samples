@@ -11,10 +11,10 @@ namespace Hybridizer.Basic.Finance
 {
     class Program
     {
-        const int OPT_N = 4000000;
-        const int NUM_ITERATIONS = 256;
+        static int OPT_N = 1024*1024 * Environment.ProcessorCount;
+        static int OPT_SZ = OPT_N * sizeof(float);
 
-        const int OPT_SZ = OPT_N * sizeof(float);
+        const int NUM_ITERATIONS = 20;
         const float RISKFREE = 0.02f;
         const float VOLATILITY = 0.30f;
 
@@ -55,20 +55,17 @@ namespace Hybridizer.Basic.Finance
                              optionYears_net,
                              0, OPT_N);
             }
-
-            for (int i = 0; i < NUM_ITERATIONS; ++i)
+            
+            Parallel.For(0, OPT_N, (opt) =>
             {
-                Parallel.For(0, OPT_N, (opt) =>
-                {
-                    BlackScholes(callResult_net,
-                                 putResult_net,
-                                 stockPrice_net,
-                                 optionStrike_net,
-                                 optionYears_net,
-                                 opt,
-                                 opt + 1);
-                });
-            }
+                BlackScholes(callResult_net,
+                                putResult_net,
+                                stockPrice_net,
+                                optionStrike_net,
+                                optionYears_net,
+                                opt,
+                                opt + 1);
+            });
 
             float maxCallError = 0.0F;
             float maxPutError = 0.0F;
