@@ -262,5 +262,10 @@ namespace MandelbrotRenderer
             fromY = fy - 0.5F * sY;
             render();
         }
+
+        private void Info_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"Render\n\tFrom: [{fromX}, {fromY}]\n\tSize: [{sX}, {sY}]\n\tIterations : {maxiter})", "Render Parameters", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

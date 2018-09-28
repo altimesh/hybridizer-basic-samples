@@ -111,10 +111,11 @@
     </Link>
     <PostBuildEvent>
       <Command>
-            echo copy "$(CudaToolkitBinDir)\cudart *.dll" "$(OutDir)"
-            copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
-		    echo copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
-		    copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"</Command>
+        echo copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
+        copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
+        echo copy "$(HybridizerInstallPath)\bin\libomp.dll" "$(OutDir)"
+        copy "$(HybridizerInstallPath)\bin\libomp.dll" "$(OutDir)"
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -141,10 +142,11 @@
     </Link>
     <PostBuildEvent>
       <Command>
-            echo copy "$(CudaToolkitBinDir)\cudart *.dll" "$(OutDir)"
-            copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"
-		    echo copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
-		    copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"</Command>
+		      echo copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
+		      copy "$(HybridizerInstallPath)\bin\hybridizer.basic.runtime.dll" "$(OutDir)"
+          echo copy "$(HybridizerInstallPath)\bin\libomp.dll" "$(OutDir)"
+          copy "$(HybridizerInstallPath)\bin\libomp.dll" "$(OutDir)"
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

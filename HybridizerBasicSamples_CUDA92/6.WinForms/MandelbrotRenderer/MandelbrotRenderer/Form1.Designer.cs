@@ -31,6 +31,8 @@ namespace MandelbrotRenderer
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -45,8 +47,7 @@ namespace MandelbrotRenderer
             this.CUDA = new System.Windows.Forms.RadioButton();
             this.CSharp = new System.Windows.Forms.RadioButton();
             this.Rendering = new System.Windows.Forms.PictureBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.Info = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -66,6 +67,7 @@ namespace MandelbrotRenderer
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.Info);
             this.splitContainer1.Panel1.Controls.Add(this.label7);
             this.splitContainer1.Panel1.Controls.Add(this.label6);
             this.splitContainer1.Panel1.Controls.Add(this.label5);
@@ -83,6 +85,24 @@ namespace MandelbrotRenderer
             this.splitContainer1.Size = new System.Drawing.Size(925, 786);
             this.splitContainer1.SplitterDistance = 180;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(9, 330);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(106, 13);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "Zoom out : right click";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(9, 317);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(99, 13);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "Zoom in   : left click";
             // 
             // label5
             // 
@@ -241,23 +261,15 @@ namespace MandelbrotRenderer
             this.Rendering.TabStop = false;
             this.Rendering.Click += new System.EventHandler(this.Rendering_Click);
             // 
-            // label6
+            // Info
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(9, 317);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(99, 13);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Zoom in   : left click";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(9, 330);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(106, 13);
-            this.label7.TabIndex = 11;
-            this.label7.Text = "Zoom out : right click";
+            this.Info.Location = new System.Drawing.Point(13, 379);
+            this.Info.Name = "Info";
+            this.Info.Size = new System.Drawing.Size(75, 23);
+            this.Info.TabIndex = 12;
+            this.Info.Text = "Info";
+            this.Info.UseVisualStyleBackColor = true;
+            this.Info.Click += new System.EventHandler(this.Info_Click);
             // 
             // Form1
             // 
@@ -299,6 +311,7 @@ namespace MandelbrotRenderer
         private RadioButton AVX512;
         private Label label7;
         private Label label6;
+        private Button Info;
     }
 }
 
