@@ -45,9 +45,9 @@ namespace MandelbrotRenderer
 
         // set the right values depending on your hardware / Hybridizer license
         bool hasCUDA = true;
-        bool hasAVX = true;
-        bool hasAVX2 = true;
-        bool hasAVX512 = true;
+        bool hasAVX = false;
+        bool hasAVX2 = false;
+        bool hasAVX512 = false;
 
         public Form1()
         {
