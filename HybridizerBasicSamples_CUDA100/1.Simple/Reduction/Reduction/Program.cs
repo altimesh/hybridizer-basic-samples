@@ -59,7 +59,7 @@ namespace Reduction
             cuda.GetDeviceProperties(out prop, 0);
 
             const int BLOCK_DIM = 256;
-            HybRunner runner = HybRunner.Cuda().SetDistrib(16 * prop.multiProcessorCount, 1, BLOCK_DIM, 1, 1, BLOCK_DIM * sizeof(double));
+            HybRunner runner = HybRunner.Cuda().SetDistrib(16 * prop.multiProcessorCount, 1, BLOCK_DIM, 1, 1, BLOCK_DIM * sizeof(int));
 
             dynamic wrapped = runner.Wrap(new Program());
 
