@@ -64,12 +64,18 @@ namespace Hybridizer.Basic.Imaging
                         byte topr = inputPixel[index - width + 1];
                         byte l = inputPixel[index - 1];
                         byte r = inputPixel[index + 1];
-                        byte botl = inputPixel[index + width + 1];
-                        byte bot = inputPixel[index + 1];
+                        byte botl = inputPixel[index + width - 1];
+                        byte bot = inputPixel[index + width];
                         byte botr = inputPixel[index + width + 1];
 
-                        output = ((int)(topl + 2 * l + botl - topr - 2 * r - botr) +
-                                        (int)(topl + 2 * top + topr - botl - 2 * bot - botr));
+                        int sobelx = (topl) + (2 * l) + (botl) - (topr) - (2 * r) - (botr);
+                        int sobely = (topl + 2 * top + topr - botl - 2 * bot - botr);
+
+                        int squareSobelx = sobelx * sobelx;
+                        int squareSobely = sobely * sobely;
+
+                        output = (int)Math.Sqrt((squareSobelx + squareSobely));
+
                         if (output < 0)
                         {
                             output = -output;
@@ -78,6 +84,7 @@ namespace Hybridizer.Basic.Imaging
                         {
                             output = 255;
                         }
+
                     }
 
                     outputPixel[(i * width + j)] = (byte)output;

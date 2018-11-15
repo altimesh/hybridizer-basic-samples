@@ -39,7 +39,8 @@ namespace Hybridizer.Basic.Imaging
             {
                 for (int j = 0; j < width; ++j)
                 {
-                    inputPixel[i * height + j] = image.GetPixel(i, j).B;
+                    double greyPixel = (image.GetPixel(i, j).R * 0.2126 + image.GetPixel(i, j).G * 0.7152 + image.GetPixel(i, j).B * 0.0722);
+                    inputPixel[i * height + j] = Convert.ToByte(greyPixel);
                 }
             }
         }
@@ -65,8 +66,14 @@ namespace Hybridizer.Basic.Imaging
                         byte bot = inputPixel[pixelId + width];
                         byte botr = inputPixel[pixelId + width + 1];
 
-                        output = ((int)(topl + 2 * l + botl - topr - 2 * r - botr) +
-                                        (int)(topl + 2 * top + topr - botl - 2 * bot - botr));
+                        int sobelx = (topl) + (2 * l) + (botl) - (topr) - (2 * r) - (botr);
+                        int sobely = (topl + 2 * top + topr - botl - 2 * bot - botr);
+
+                        int squareSobelx = sobelx * sobelx;
+                        int squareSobely = sobely * sobely;
+
+                        output = (int)Math.Sqrt((squareSobelx + squareSobely));
+
                         if (output < 0)
                         {
                             output = -output;
