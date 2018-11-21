@@ -11,7 +11,7 @@ namespace Hybridizer.Basic.Imaging
         static void Main(string[] args)
         {
             // open the input image and lock its content for read operations
-            Bitmap baseImage = (Bitmap)Image.FromFile("lena512.bmp");
+            Bitmap baseImage = (Bitmap)Image.FromFile("../../images/lena_highres_greyscale.bmp");
             PixelFormat format = baseImage.PixelFormat;
             var lockedSource = baseImage.LockBits(new Rectangle(0, 0, baseImage.Width, baseImage.Height), ImageLockMode.ReadOnly, format);
             IntPtr srcData = lockedSource.Scan0;
@@ -44,8 +44,8 @@ namespace Hybridizer.Basic.Imaging
 
             // and save result
             resImage.Palette = baseImage.Palette;
-            resImage.Save("lena_sobel.bmp");
-			try { Process.Start("lena_sobel.bmp");} catch {} // catch exception for non interactives machines
+            resImage.Save("lena_highres_sobel.bmp");
+			try { Process.Start("lena_highres_sobel.bmp");} catch {} // catch exception for non interactives machines
         }
 
         [EntryPoint]
@@ -64,8 +64,8 @@ namespace Hybridizer.Basic.Imaging
                         byte topr = inputPixel[index - width + 1];
                         byte l = inputPixel[index - 1];
                         byte r = inputPixel[index + 1];
-                        byte botl = inputPixel[index + width - 1];
-                        byte bot = inputPixel[index + width];
+                        byte botl = inputPixel[index + width + 1];
+                        byte bot = inputPixel[index + 1];
                         byte botr = inputPixel[index + width + 1];
 
                         int sobelx = (topl) + (2 * l) + (botl) - (topr) - (2 * r) - (botr);
@@ -75,6 +75,7 @@ namespace Hybridizer.Basic.Imaging
                         int squareSobely = sobely * sobely;
 
                         output = (int)Math.Sqrt((squareSobelx + squareSobely));
+                        
                         if (output < 0)
                         {
                             output = -output;

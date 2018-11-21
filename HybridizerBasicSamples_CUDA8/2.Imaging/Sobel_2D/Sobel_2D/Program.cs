@@ -1,6 +1,7 @@
 using System.Drawing;
 using Hybridizer.Runtime.CUDAImports;
 using System.Diagnostics;
+using System;
 
 namespace Hybridizer.Basic.Imaging
 {
@@ -33,7 +34,8 @@ namespace Hybridizer.Basic.Imaging
             {
                 for (int j = 0; j < size; ++j)
                 {
-                    inputPixel[i, j] = image.GetPixel(i, j).R;
+                    double greyPixel = (image.GetPixel(i, j).R * 0.2126 + image.GetPixel(i, j).G * 0.7152 + image.GetPixel(i, j).B * 0.0722);
+                    inputPixel[i, j] = Convert.ToByte(greyPixel);
                 }
             }
         }
@@ -50,16 +52,22 @@ namespace Hybridizer.Basic.Imaging
                     if (i > 0 && j > 0 && i < size - 1 && j < size - 1)
                     {
                         byte topl = inputPixel[i-1, j-1];
-                        byte top = inputPixel[i, j-1];
-                        byte topr = inputPixel[i+1, j-1];
+                        byte top = inputPixel[i-1, j];
+                        byte topr = inputPixel[i-1, j+1];
                         byte l = inputPixel[i, j-1];
                         byte r = inputPixel[i, j+1];
-                        byte botl = inputPixel[i-1, j+1];
-                        byte bot = inputPixel[i, j+1];
+                        byte botl = inputPixel[i+1, j-1];
+                        byte bot = inputPixel[i+1, j];
                         byte botr = inputPixel[i+1, j+1];
 
-                        output = ((int)(topl + 2 * l + botl - topr - 2 * r - botr) +
-                                        (int)(topl + 2 * top + topr - botl - 2 * bot - botr));
+                        int sobelx = (topl) + (2 * l) + (botl) - (topr) - (2 * r) - (botr);
+                        int sobely = (topl + 2 * top + topr - botl - 2 * bot - botr);
+
+                        int squareSobelx = sobelx * sobelx;
+                        int squareSobely = sobely * sobely;
+
+                        output = (int)Math.Sqrt((squareSobelx + squareSobely));
+
                         if (output < 0)
                         {
                             output = -output;

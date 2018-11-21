@@ -13,7 +13,7 @@ namespace Hybridizer.Basic.Imaging
     {
         static void Main(string[] args)
         {
-            Bitmap baseImage = (Bitmap)Image.FromFile("lena512.bmp");
+            Bitmap baseImage = (Bitmap)Image.FromFile("../../images/lena_highres_greyscale.bmp");
             int height = baseImage.Height, width = baseImage.Width;
             
             Bitmap resImage = new Bitmap(width, height);
@@ -23,14 +23,14 @@ namespace Hybridizer.Basic.Imaging
 
             ReadImage(inputPixels, baseImage, width, height);
 
-            HybRunner runner = HybRunner.Cuda("Sobel_CUDA.dll").SetDistrib(32, 32, 16, 16, 1, 0);
+            HybRunner runner = HybRunner.Cuda().SetDistrib(32, 32, 16, 16, 1, 0);
             dynamic wrapper = runner.Wrap(new Program());
 
-            wrapper.ComputeSobel(outputPixels, inputPixels, width, height, 0, height);
+            wrapper.ComputeSobel(outputPixels, inputPixels, width, height);
            
 
-            SaveImage("lena-sobel.bmp", outputPixels, width, height);
-			try { Process.Start("lena-sobel.bmp");} catch {} // catch exception for non interactives machines
+            SaveImage("lena_highres_sobel.bmp", outputPixels, width, height);
+			try { Process.Start("lena_highres_sobel.bmp");} catch {} // catch exception for non interactives machines
         }
 
         public static void ReadImage(byte[] inputPixel, Bitmap image, int width, int height)
@@ -46,17 +46,16 @@ namespace Hybridizer.Basic.Imaging
         }
         
         [EntryPoint]
-        public static void ComputeSobel(byte[] outputPixel, byte[] inputPixel, int width, int height, int from, int to)
+        public static void ComputeSobel(byte[] outputPixel, byte[] inputPixel, int width, int height)
         {
-            for (int i = from + threadIdx.y + blockIdx.y * blockDim.y; i < to; i += blockDim.y * gridDim.y)
+            for (int i = threadIdx.y + blockIdx.y * blockDim.y; i < height; i += blockDim.y * gridDim.y)
             {
                 for (int j = threadIdx.x + blockIdx.x * blockDim.x; j < width; j += blockDim.x * gridDim.x)
                 {
-                    int pixelId = i * width + j;
-
                     int output = 0;
                     if (i != 0 && j != 0 && i != height - 1 && j != width - 1)
                     {
+                        int pixelId = i * width + j;
                         byte topl = inputPixel[pixelId - width - 1];
                         byte top = inputPixel[pixelId - width];
                         byte topr = inputPixel[pixelId - width + 1];
