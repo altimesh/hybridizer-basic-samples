@@ -45,7 +45,7 @@ namespace LambdaReduction
 
 			if (cacheIndex == 0)
 			{
-				result[blockIdx.x] = cache[0];
+				AtomicExpr.apply(ref result[0], cache[0], reductor);
 			}
 		}
 
@@ -67,8 +67,6 @@ namespace LambdaReduction
 			float[] a = new float[N];
 
 			// initialization
-			float cudaMax = float.MinValue;
-			float cudaAdd = 0.0F;
 			Random random = new Random(42);
 			Parallel.For(0, N, i => a[i] = (float) random.NextDouble());
 
@@ -77,8 +75,8 @@ namespace LambdaReduction
 			cuda.GetDeviceProperties(out prop, 0);
 			int gridDimX = 16 * prop.multiProcessorCount;
 			HybRunner runner = HybRunner.Cuda().SetDistrib(gridDimX, 1, 256, 1, 1, gridDimX * sizeof(float));
-			float[] buffMax = new float[gridDimX];
-			float[] buffAdd = new float[gridDimX];
+			float[] buffMax = new float[1];
+			float[] buffAdd = new float[1];
 			dynamic wrapped = runner.Wrap(new Program());
 
 			// device reduction
@@ -86,28 +84,21 @@ namespace LambdaReduction
 			wrapped.ReduceAdd(buffAdd, a, N);
 			cuda.ERROR_CHECK(cuda.DeviceSynchronize());
 
-			// finalize reduction host side
-			for (int i = 0; i < gridDimX; ++i)
-			{
-				cudaMax = Math.Max(cudaMax, buffMax[i]);
-				cudaAdd += buffAdd[i];
-			}
-
 			// check results
 			float expectedMax = a.AsParallel().Aggregate((x, y) => Math.Max(x, y));
 			float expectedAdd = a.AsParallel().Aggregate((x, y) => x+y);
 			bool hasError = false;
-			if(cudaMax != expectedMax)
+			if(buffMax[0] != expectedMax)
 			{
-				Console.Error.WriteLine($"MAX Error : {cudaMax} != {expectedMax}");
+				Console.Error.WriteLine($"MAX Error : {buffMax[0]} != {expectedMax}");
 				hasError = true;
 			}
 
 			// addition is not associative, so results cannot be exactly the same
 			// https://en.wikipedia.org/wiki/Associative_property#Nonassociativity_of_floating_point_calculation
-			if (Math.Abs(cudaAdd - expectedAdd) / expectedAdd > 1.0E-6F)
+			if (Math.Abs(buffAdd[0] - expectedAdd) / expectedAdd > 1.0E-6F)
 			{
-				Console.Error.WriteLine($"ADD Error : {cudaAdd} != {expectedAdd}");
+				Console.Error.WriteLine($"ADD Error : {buffAdd[0]} != {expectedAdd}");
 				hasError = true;
 			}
 
