@@ -270,18 +270,27 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LambdaReduction", "7.Advanced\LambdaReduction\LambdaReduction\LambdaReduction.csproj", "{3DDCF1FC-0FDE-47A8-88F7-FDB4D5137943}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LambdaReduction_CUDA", "7.Advanced\LambdaReduction\LambdaReduction_CUDA\LambdaReduction_CUDA.vcxproj", "{CCC7935B-C0C4-492A-BCA9-F618C2BF2BB0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3DDCF1FC-0FDE-47A8-88F7-FDB4D5137943} = {3DDCF1FC-0FDE-47A8-88F7-FDB4D5137943}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GenericReduction", "GenericReduction", "{80FBDC22-7EC3-4BB9-A0DB-A10698B9B38D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericReduction", "7.Advanced\GenericReduction\GenericReduction\GenericReduction.csproj", "{4B7875CD-031E-40A4-ACF7-AE84124AA87F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GenericReduction_CUDA", "7.Advanced\GenericReduction\GenericReduction_CUDA\GenericReduction_CUDA.vcxproj", "{9A6464D4-6B11-45D3-8F84-A4640DE96B55}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4B7875CD-031E-40A4-ACF7-AE84124AA87F} = {4B7875CD-031E-40A4-ACF7-AE84124AA87F}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SimpleMetadataDecorator", "SimpleMetadataDecorator", "{E6AC3C01-BF46-4D1C-8548-DB76784018A9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMetadataDecorator", "7.Advanced\SimpleMetadataDecorator\SimpleMetadataDecorator\SimpleMetadataDecorator.csproj", "{0D8061D9-8AE4-414A-882D-F57802D52D46}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleMetadataDecorator_CUDA", "7.Advanced\SimpleMetadataDecorator\SimpleMetadataDecorator_CUDA\SimpleMetadataDecorator_CUDA.vcxproj", "{84B0147F-C6A8-4214-9A77-45636DC602C5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0D8061D9-8AE4-414A-882D-F57802D52D46} = {0D8061D9-8AE4-414A-882D-F57802D52D46}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
