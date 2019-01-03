@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -63,7 +63,7 @@
     <HybridizerFlavors>CUDA</HybridizerFlavors>
     <HybridizerBuiltInFiles>$(HybridizerInstallPath)\include\hybridizer.cuda.builtins</HybridizerBuiltInFiles>
     <HybridizerJitterServicePath>$(HybridizerInstallPath)\bin\Hybridizer.PTXJitterService.9.2.exe</HybridizerJitterServicePath>
-    <HybridizerJitterServiceOptions>--gpu-architecture=auto;-G;--relocatable-device-code=false;-lineinfo;--std=c++11;-DNO_EXCEPTION</HybridizerJitterServiceOptions>
+    <HybridizerJitterServiceOptions>--gpu-architecture=auto;-G;--relocatable-device-code=false;-lineinfo;--std=c++14;-DNO_EXCEPTION</HybridizerJitterServiceOptions>
     <HybridizerDllFullPath>..\MandelbrotRenderer\MandelbrotRenderer.csproj</HybridizerDllFullPath>
     <HybridizerBinaryPath>$(HybridizerInstallPath)\bin\Hybridizer.exe</HybridizerBinaryPath>
     <HybridizerBuildTask>$(HybridizerInstallPath)\bin\Hybridizer.VSIntegration.BuildSatelliteTask.dll</HybridizerBuildTask>
@@ -80,7 +80,7 @@
     <HybridizerFlavors>CUDA</HybridizerFlavors>
     <HybridizerBuiltInFiles>$(HybridizerInstallPath)\include\hybridizer.cuda.builtins</HybridizerBuiltInFiles>
     <HybridizerJitterServicePath>$(HybridizerInstallPath)\bin\Hybridizer.PTXJitterService.9.2.exe</HybridizerJitterServicePath>
-    <HybridizerJitterServiceOptions>--gpu-architecture=auto;--relocatable-device-code=false;-lineinfo;--std=c++11;-DNO_EXCEPTION</HybridizerJitterServiceOptions>
+    <HybridizerJitterServiceOptions>--gpu-architecture=auto;--relocatable-device-code=false;-lineinfo;--std=c++14;-DNO_EXCEPTION</HybridizerJitterServiceOptions>
     <HybridizerDllFullPath>..\MandelbrotRenderer\MandelbrotRenderer.csproj</HybridizerDllFullPath>
     <HybridizerBinaryPath>$(HybridizerInstallPath)\bin\Hybridizer.exe</HybridizerBinaryPath>
     <HybridizerBuildTask>$(HybridizerInstallPath)\bin\Hybridizer.VSIntegration.BuildSatelliteTask.dll</HybridizerBuildTask>
