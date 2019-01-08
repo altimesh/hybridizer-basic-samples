@@ -74,7 +74,9 @@ namespace LambdaReduction
 			cudaDeviceProp prop;
 			cuda.GetDeviceProperties(out prop, 0);
 			int gridDimX = 16 * prop.multiProcessorCount;
-			HybRunner runner = HybRunner.Cuda().SetDistrib(gridDimX, 1, 256, 1, 1, gridDimX * sizeof(float));
+            int blockDimX = 256;
+            cuda.DeviceSetCacheConfig(cudaFuncCache.cudaFuncCachePreferShared);
+            HybRunner runner = HybRunner.Cuda().SetDistrib(gridDimX, 1, blockDimX, 1, 1, blockDimX * sizeof(float));
 			float[] buffMax = new float[1];
 			float[] buffAdd = new float[1];
 			dynamic wrapped = runner.Wrap(new Program());
@@ -96,7 +98,7 @@ namespace LambdaReduction
 
 			// addition is not associative, so results cannot be exactly the same
 			// https://en.wikipedia.org/wiki/Associative_property#Nonassociativity_of_floating_point_calculation
-			if (Math.Abs(buffAdd[0] - expectedAdd) / expectedAdd > 1.0E-6F)
+			if (Math.Abs(buffAdd[0] - expectedAdd) / expectedAdd > 1.0E-5F)
 			{
 				Console.Error.WriteLine($"ADD Error : {buffAdd[0]} != {expectedAdd}");
 				hasError = true;
