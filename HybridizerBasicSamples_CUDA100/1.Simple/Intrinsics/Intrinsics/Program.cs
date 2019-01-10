@@ -37,7 +37,7 @@ namespace Intrinsics
 
         public static half2 exp12(half2 x)
         {
-            return exp(exp(exp(exp(exp(exp(exp(exp(exp(exp(exp(x)))))))))));
+            return exp(exp(exp(exp(exp(exp(exp(exp(exp(exp(exp(exp(x))))))))))));
         }
 
         [EntryPoint]
