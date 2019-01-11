@@ -115,7 +115,9 @@ namespace GenericReduction
 			cudaDeviceProp prop;
 			cuda.GetDeviceProperties(out prop, 0);
 			int gridDimX = 16 * prop.multiProcessorCount;
-			HybRunner runner = HybRunner.Cuda().SetDistrib(gridDimX, 1, 256, 1, 1, gridDimX * sizeof(float));
+            int blockDimX = 256;
+            cuda.DeviceSetCacheConfig(cudaFuncCache.cudaFuncCachePreferShared);
+			HybRunner runner = HybRunner.Cuda().SetDistrib(gridDimX, 1, blockDimX, 1, 1, blockDimX * sizeof(float));
 			float[] buffMax = new float[1];
 			float[] buffAdd = new float[1];
 			var maxReductor = new GridReductor<MaxReductor>();

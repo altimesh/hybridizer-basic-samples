@@ -9,11 +9,13 @@ namespace Intrinsics
     /// </summary>
     class Program
     {
+        [HybridArithmeticFunction]
         public static half2 getHalf2(float x)
         {
             return new half2(x, x);
         }
 
+        [HybridArithmeticFunction]
         public static half2 exp(half2 x)
         {
             return ((((((((((((((getHalf2(15.0F) + x)
@@ -33,18 +35,23 @@ namespace Intrinsics
                 * x * getHalf2(7.6471637318198164759011319857881e-13F);
         }
 
+        public static half2 exp12(half2 x)
+        {
+            return exp(exp(exp(exp(exp(exp(exp(exp(exp(exp(exp(exp(x))))))))))));
+        }
+
         [EntryPoint]
         public static void Compute(half2[] input, int N)
         {
             Parallel.For(0, N, i =>
             {
-                input[i] = exp(input[i]);
+                input[i] = exp12(input[i]);
             });
         }
 
         static void Main(string[] args)
         {
-            const int N = 1024 * 32;
+            const int N = 1024 * 1024 * 32;
             half2[] input = new half2[N];
 
             cudaDeviceProp prop;
@@ -56,10 +63,10 @@ namespace Intrinsics
                 Environment.Exit(6); // abort
             }
 
-            HybRunner runner = HybRunner.Cuda().SetDistrib(16 * prop.multiProcessorCount, 128);
+            HybRunner runner = HybRunner.Cuda();
             dynamic wrapped = runner.Wrap(new Program());
             wrapped.Compute(input, N);
-            Console.WriteLine(cuda.GetErrorString(cuda.DeviceSynchronize()));
+            cuda.ERROR_CHECK(cuda.DeviceSynchronize());
         }
     }
 }

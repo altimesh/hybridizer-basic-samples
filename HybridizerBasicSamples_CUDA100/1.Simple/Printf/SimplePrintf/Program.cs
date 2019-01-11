@@ -1,12 +1,11 @@
 ﻿using Hybridizer.Runtime.CUDAImports;
 using System;
-using System.Threading.Tasks;
 
 namespace HelloWorld
 {
     class Program
     {
-        [EntryPoint("run")]
+        [EntryPoint]
         public static void Run(int N, int[] a)
         {
             for (int i = threadIdx.x + blockDim.x * blockIdx.x; i < N; i += blockDim.x * gridDim.x)
@@ -27,6 +26,10 @@ namespace HelloWorld
 
             // run the method on GPU
             wrapped.Run(a.Length, a);
+
+            // synchronize the GPU to flush stdout on the device
+            // add error checking
+            cuda.ERROR_CHECK(cuda.DeviceSynchronize());
         }
     }
 }
