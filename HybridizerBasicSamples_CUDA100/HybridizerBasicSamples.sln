@@ -289,6 +289,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCufft", "5.CUDA runti
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleCufft_CUDA", "5.CUDA runtime\SimpleCufft\SimpleCufft_CUDA\SimpleCufft_CUDA.vcxproj", "{960B34AF-3270-4C33-A50D-6453F8DC87FE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CooperativeGroupsMultiBlock", "CooperativeGroupsMultiBlock", "{DC462851-6CCA-4A89-B890-6CF8AB08AC68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CooperativeGroupsMultiBlock", "7.Advanced\CooperativeGroupsMultiBlock\CooperativeGroupsMultiBlock\CooperativeGroupsMultiBlock.csproj", "{D553724C-BA07-43E7-961F-AD2AF77F7BC0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CooperativeGroupsMultiBlock_CUDA", "7.Advanced\CooperativeGroupsMultiBlock\CooperativeGroupsMultiBlock_CUDA\CooperativeGroupsMultiBlock_CUDA.vcxproj", "{1A7F60E9-5F3B-4660-8BF2-0E3255EF4307}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -535,6 +541,14 @@ Global
 		{960B34AF-3270-4C33-A50D-6453F8DC87FE}.Debug|x64.Build.0 = Debug|x64
 		{960B34AF-3270-4C33-A50D-6453F8DC87FE}.Release|x64.ActiveCfg = Release|x64
 		{960B34AF-3270-4C33-A50D-6453F8DC87FE}.Release|x64.Build.0 = Release|x64
+		{D553724C-BA07-43E7-961F-AD2AF77F7BC0}.Debug|x64.ActiveCfg = Debug|x64
+		{D553724C-BA07-43E7-961F-AD2AF77F7BC0}.Debug|x64.Build.0 = Debug|x64
+		{D553724C-BA07-43E7-961F-AD2AF77F7BC0}.Release|x64.ActiveCfg = Release|x64
+		{D553724C-BA07-43E7-961F-AD2AF77F7BC0}.Release|x64.Build.0 = Release|x64
+		{1A7F60E9-5F3B-4660-8BF2-0E3255EF4307}.Debug|x64.ActiveCfg = Debug|x64
+		{1A7F60E9-5F3B-4660-8BF2-0E3255EF4307}.Debug|x64.Build.0 = Debug|x64
+		{1A7F60E9-5F3B-4660-8BF2-0E3255EF4307}.Release|x64.ActiveCfg = Release|x64
+		{1A7F60E9-5F3B-4660-8BF2-0E3255EF4307}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -632,6 +646,9 @@ Global
 		{D711DCAF-4353-4FBC-9BAE-6C8D3970CC2A} = {587DEA85-E77D-4C61-8E01-B5EFB426780B}
 		{5A492344-27A8-449E-B639-99299465B15E} = {D711DCAF-4353-4FBC-9BAE-6C8D3970CC2A}
 		{960B34AF-3270-4C33-A50D-6453F8DC87FE} = {D711DCAF-4353-4FBC-9BAE-6C8D3970CC2A}
+		{DC462851-6CCA-4A89-B890-6CF8AB08AC68} = {63E090F8-FA5D-4D58-B9DF-6837D2630F72}
+		{D553724C-BA07-43E7-961F-AD2AF77F7BC0} = {DC462851-6CCA-4A89-B890-6CF8AB08AC68}
+		{1A7F60E9-5F3B-4660-8BF2-0E3255EF4307} = {DC462851-6CCA-4A89-B890-6CF8AB08AC68}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0F397272-0E73-42D3-A8B0-66344B28521E}
