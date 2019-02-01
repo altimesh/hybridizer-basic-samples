@@ -34,7 +34,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Hybridizer.Runtime.CUDAImports, Version=1.2.10308.0, Culture=neutral, PublicKeyToken=2e60b65856451e38, processorArchitecture=AMD64" />
+    <Reference Include="Hybridizer.Runtime.CUDAImports" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

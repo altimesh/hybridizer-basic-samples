@@ -67,7 +67,7 @@
     <HybridizerFlavors>CUDA</HybridizerFlavors>
     <HybridizerBuiltInFiles>$(HybridizerInstallPath)\include\hybridizer.cuda.builtins</HybridizerBuiltInFiles>
     <HybridizerJitterServicePath>$(HybridizerInstallPath)\bin\Hybridizer.PTXJitterService.10.0.exe</HybridizerJitterServicePath>
-    <HybridizerJitterServiceOptions>--gpu-architecture=auto;-G;--relocatable-device-code=true;-lineinfo;--std=c++14;-DNO_EXCEPTION</HybridizerJitterServiceOptions>
+    <HybridizerJitterServiceOptions>-DNDEBUG;--gpu-architecture=auto;-G;--relocatable-device-code=true;-lineinfo;--std=c++14;-DNO_EXCEPTION</HybridizerJitterServiceOptions>
     <HybridizerJitterAdditionalLibs>$(CUDA_PATH_V10_0)\lib\x64\cudadevrt.lib</HybridizerJitterAdditionalLibs>
     <HybridizerDllFullPath>..\$(DotNetProjectName)\$(DotNetProjectName).csproj</HybridizerDllFullPath>
     <HybridizerBinaryPath>$(HybridizerInstallPath)\bin\Hybridizer.exe</HybridizerBinaryPath>
@@ -80,12 +80,13 @@
     <HybridizerPlatform>x64</HybridizerPlatform>
     <HybridizerConfiguration>Debug</HybridizerConfiguration>
     <HybridizerWorkingDirectory>hybridizer-generated-sources</HybridizerWorkingDirectory>
+    <HybridizerAdditionalJitHeaders>cooperative_groups.h=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\include;cooperative_groups_helpers.h=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\include</HybridizerAdditionalJitHeaders>
   </PropertyGroup>
   <PropertyGroup Label="HybridizerConfig" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <HybridizerFlavors>CUDA</HybridizerFlavors>
     <HybridizerBuiltInFiles>$(HybridizerInstallPath)\include\hybridizer.cuda.builtins</HybridizerBuiltInFiles>
     <HybridizerJitterServicePath>$(HybridizerInstallPath)\bin\Hybridizer.PTXJitterService.10.0.exe</HybridizerJitterServicePath>
-    <HybridizerJitterServiceOptions>--gpu-architecture=auto;-G;--relocatable-device-code=true;-lineinfo;--std=c++14;-DNO_EXCEPTION</HybridizerJitterServiceOptions>
+    <HybridizerJitterServiceOptions>-DNDEBUG;--gpu-architecture=auto;-G;--relocatable-device-code=true;-lineinfo;--std=c++14;-DNO_EXCEPTION</HybridizerJitterServiceOptions>
     <HybridizerJitterAdditionalLibs>$(CUDA_PATH_V10_0)\lib\x64\cudadevrt.lib</HybridizerJitterAdditionalLibs>
     <HybridizerDllFullPath>..\$(DotNetProjectName)\$(DotNetProjectName).csproj</HybridizerDllFullPath>
     <HybridizerBinaryPath>$(HybridizerInstallPath)\bin\Hybridizer.exe</HybridizerBinaryPath>
