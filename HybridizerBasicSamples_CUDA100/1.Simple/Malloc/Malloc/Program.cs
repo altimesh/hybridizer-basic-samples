@@ -14,20 +14,8 @@ namespace Malloc
     /// </summary>
     unsafe class Program
     {
-        [IntrinsicFunction("malloc")]
-        public static void* malloc(int size)
-        {
-            return Marshal.AllocHGlobal(size).ToPointer();
-        }
-
-        [IntrinsicFunction("free")]
-        public static void free(void* ptr)
-        {
-            Marshal.Release(new IntPtr(ptr));
-        }
-
         [Kernel]
-        public static double apply(double* stencil, double[] src, int i)
+        public static double apply(double[] stencil, double[] src, int i)
         {
             double res = 0.0;
             for(int k = -4; k <= 4; ++k)
@@ -41,7 +29,7 @@ namespace Malloc
         [EntryPoint]
         public static void test(double[] dest, double[] src, int N)
         {
-            double* stencil = (double*)malloc(9 * sizeof(double));
+            double[] stencil = new double[9]; 
             stencil[0] = -4.0;
             stencil[1] = -3.0;
             stencil[2] = -2.0;
@@ -55,7 +43,6 @@ namespace Malloc
             {
                 dest[k] = apply(stencil, src, k);
             }
-            free(stencil);
         }
 
         static void Main(string[] args)
