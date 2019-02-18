@@ -83,6 +83,7 @@ namespace CooperativeGroupsMultiBlock
 
         static void Main(string[] args)
         {
+            // TODO: enable cudaOccupancyCalculator
             int deviceCount;
             int numBlocks = 32; // 4 * prop.multiProcessorCount;
             int numThreads = 128;
@@ -107,12 +108,6 @@ namespace CooperativeGroupsMultiBlock
                 Console.Error.WriteLine("No GPU Found supporting Cooperative Launch");
                 Environment.Exit(6);
             }
-            //float[] a = new float[2] { 1.0F, 1.0F };
-            //float[] b = new float[2] { 2.0F, 3.0F };
-            //HybRunner.Cuda().SetDistrib(1, 2).Wrap(new Program()).Apply(new Add(), a, b, 2);
-            //cuda.ERROR_CHECK(cuda.DeviceSynchronize());
-            //Console.WriteLine(String.Join(", ", a));
-            ////return;
 
             const int N = 1024 * 1024;
 
