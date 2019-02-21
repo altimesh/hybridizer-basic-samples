@@ -10,9 +10,6 @@ namespace LambdaReduction
 {
 	class Program
 	{
-		/// <summary>
-		/// result has blockDim entries
-		/// </summary>
 		[Kernel]
 		public static void InnerReduce(float[] result, float[] input, int N, float neutral, Func<float, float, float> reductor)
 		{
