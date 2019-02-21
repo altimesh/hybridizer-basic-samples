@@ -11,7 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="hybridizer-generated-sources\hybridizer.all.cuda.cu" />
+    <ClCompile Include="hybridizer-generated-sources\hybridizer.generated.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="hybridizer-generated-sources\hybridizer.wrappers.cu" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{f40af656-734b-4bdc-81a2-e84b2a6a4aea}</ProjectGuid>
@@ -72,7 +75,7 @@
     <HybridizerJitterServicePath>$(HybridizerInstallPath)\bin\Hybridizer.PTXJitterService.10.0.exe</HybridizerJitterServicePath>
     <HybridizerJitterServiceOptions>--gpu-architecture=auto;-G;--relocatable-device-code=false;-lineinfo;--std=c++14;-DNO_EXCEPTION</HybridizerJitterServiceOptions>
     <HybridizerDllFullPath>..\$(DotNetProjectName)\$(DotNetProjectName).csproj</HybridizerDllFullPath>
-    <HybridizerBinaryPath>W:\VsSolutions\Transcoder\Altimesh.Hybridizer.Application\bin\x64\Debug\Altimesh.Hybridizer.Application.exe</HybridizerBinaryPath>
+    <HybridizerBinaryPath>$(HybridizerInstallPath)\bin\Hybridizer.exe</HybridizerBinaryPath>
     <HybridizerBuildTask>$(HybridizerInstallPath)\bin\Hybridizer.VSIntegration.BuildSatelliteTask.dll</HybridizerBuildTask>
     <HybridizerBuildSatellite>$(HybridizerInstallPath)\bin\Hybridizer.VSIntegration.BuildSatellite.exe</HybridizerBuildSatellite>
     <HybridizerGenerateLineInformation>true</HybridizerGenerateLineInformation>
@@ -89,7 +92,7 @@
     <HybridizerJitterServicePath>$(HybridizerInstallPath)\bin\Hybridizer.PTXJitterService.10.0.exe</HybridizerJitterServicePath>
     <HybridizerJitterServiceOptions>--gpu-architecture=auto;--relocatable-device-code=false;-lineinfo;--std=c++14;-DNO_EXCEPTION</HybridizerJitterServiceOptions>
     <HybridizerDllFullPath>..\$(DotNetProjectName)\$(DotNetProjectName).csproj</HybridizerDllFullPath>
-    <HybridizerBinaryPath>W:\VsSolutions\Transcoder\Altimesh.Hybridizer.Application\bin\x64\Debug\Altimesh.Hybridizer.Application.exe</HybridizerBinaryPath>
+    <HybridizerBinaryPath>$(HybridizerInstallPath)\bin\Hybridizer.exe</HybridizerBinaryPath>
     <HybridizerBuildTask>$(HybridizerInstallPath)\bin\Hybridizer.VSIntegration.BuildSatelliteTask.dll</HybridizerBuildTask>
     <HybridizerBuildSatellite>$(HybridizerInstallPath)\bin\Hybridizer.VSIntegration.BuildSatellite.exe</HybridizerBuildSatellite>
     <HybridizerGenerateLineInformation>false</HybridizerGenerateLineInformation>
@@ -122,7 +125,8 @@
     </PostBuildEvent>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
-      <Include>W:\VsSolutions\Transcoder\Transcoder.Cuda</Include>
+      <Include>
+      </Include>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -151,7 +155,8 @@
     </PostBuildEvent>
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
-      <Include>W:\VsSolutions\Transcoder\Transcoder.Cuda</Include>
+      <Include>
+      </Include>
     </CudaCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
