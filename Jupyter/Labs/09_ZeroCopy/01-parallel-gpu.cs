@@ -13,7 +13,7 @@ namespace Hybridizer.Basic.Imaging
     {
         static void Main(string[] args)
         {
-            Bitmap baseImage = (Bitmap)Image.FromFile("../../images/lena_highres_greyscale.bmp");
+            Bitmap baseImage = (Bitmap)Image.FromFile("../../../images/lena_highres_greyscale.bmp");
             int height = baseImage.Height, width = baseImage.Width;
             
             Bitmap resImage = new Bitmap(width, height);

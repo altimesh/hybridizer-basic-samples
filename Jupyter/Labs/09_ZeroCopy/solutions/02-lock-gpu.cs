@@ -11,7 +11,7 @@ namespace Hybridizer.Basic.Imaging
         static void Main(string[] args)
         {
             // open the input image and lock its content for read operations
-            Bitmap baseImage = (Bitmap)Image.FromFile("../../images/lena_highres_greyscale.bmp");
+            Bitmap baseImage = (Bitmap)Image.FromFile("../../../images/lena_highres_greyscale.bmp");
             PixelFormat format = baseImage.PixelFormat;
             var lockedSource = baseImage.LockBits(new Rectangle(0, 0, baseImage.Width, baseImage.Height), ImageLockMode.ReadOnly, format);
             IntPtr srcData = lockedSource.Scan0;
