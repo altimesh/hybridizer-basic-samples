@@ -22,7 +22,7 @@ namespace NPP_ImageSegmentation
         [EntryPoint]
         public static void ColorizeLabels(ushort[] segments, uchar4[] colors, uchar4[] colormap, int maxLabel, int count, int width, int pitch)
         {
-            for(int tid = threadIdx.x + blockIdx.x * blockDim.x; tid < count; tid += blockDim.x * gridDim.x)
+            for (int tid = threadIdx.x + blockIdx.x * blockDim.x; tid < count; tid += blockDim.x * gridDim.x)
             {
                 int colorsI = tid % width;
                 if (colorsI < width)
@@ -54,7 +54,7 @@ namespace NPP_ImageSegmentation
             runner.saveAssembly();
             cudaStream_t stream;
             cuda.StreamCreate(out stream);
-            
+
             NppStreamContext context = new NppStreamContext
             {
                 hStream = stream,
@@ -99,21 +99,21 @@ namespace NPP_ImageSegmentation
                 cuda.ERROR_CHECK(cuda.Malloc(out pScratchBufferNPP2, nBufferSize));
                 NPPI.ERROR_CHECK(NPPI.CompressMarkerLabels_16u_C1IR_Ctx(input.deviceData, input.pitch, oSizeROI, maxLabel, out maxLabel, pScratchBufferNPP2, context));
 
-                uchar4[] colormap = new uchar4[maxLabel];
-                for(int i = 0; i < maxLabel; ++i)
+                uchar4[] colormap = new uchar4[maxLabel + 1];
+                for (int i = 0; i <= maxLabel; ++i)
                 {
-                    colormap[i] = new uchar4 { x = (byte) (rand.Next() % 256), y = (byte) (rand.Next() % 256), z = (byte) (rand.Next() % 256), w = 0};
+                    colormap[i] = new uchar4 { x = (byte)(rand.Next() % 256), y = (byte)(rand.Next() % 256), z = (byte)(rand.Next() % 256), w = 0 };
                 }
 
                 IntPtr d_colormap;
-                cuda.Malloc(out d_colormap, maxLabel * 4 * sizeof(byte));
+                cuda.Malloc(out d_colormap, (maxLabel + 1) * 4 * sizeof(byte));
                 var handle = GCHandle.Alloc(colormap, GCHandleType.Pinned);
-                cuda.Memcpy(d_colormap, handle.AddrOfPinnedObject(), maxLabel * 4 * sizeof(byte), cudaMemcpyKind.cudaMemcpyHostToDevice);
+                cuda.Memcpy(d_colormap, handle.AddrOfPinnedObject(), (maxLabel + 1) * 4 * sizeof(byte), cudaMemcpyKind.cudaMemcpyHostToDevice);
                 handle.Free();
 
                 NPP_ImageSegmentationx46Programx46ColorizeLabels_ExternCWrapperStream_CUDA(
                     8 * prop.multiProcessorCount, 1, 256, 1, 1, 0, stream, // cuda configuration
-                    input.deviceData, d_output, d_colormap, maxLabel, input.pitch * input.height / sizeof(ushort), input.width, input.pitch / sizeof(ushort));
+                    input.deviceData, d_output, d_colormap, maxLabel + 1, input.pitch * input.height / sizeof(ushort), input.width, input.pitch / sizeof(ushort));
 
                 handle = GCHandle.Alloc(output, GCHandleType.Pinned);
                 cuda.Memcpy(handle.AddrOfPinnedObject(), d_output, input.width * input.height * sizeof(byte) * 4, cudaMemcpyKind.cudaMemcpyDeviceToHost);
