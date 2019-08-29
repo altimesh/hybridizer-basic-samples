@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.2
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.Utils", "0.Utils", "{74C897E3-0223-44F9-ADAA-973710108819}"
 EndProject
@@ -307,6 +307,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericFunctions", "7.Advan
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GenericFunctions_CUDA", "7.Advanced\GenericFunctions\GenericFunctions_CUDA\GenericFunctions_CUDA.vcxproj", "{F40AF656-734B-4BDC-81A2-E84B2A6A4AEA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NPP_ImageSegmentation", "NPP_ImageSegmentation", "{8537A1FB-4800-4E12-8B47-2D93A6371FCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NPP_ImageSegmentation", "5.CUDA runtime\NPP_ImageSegmentation\NPP_ImageSegmentation\NPP_ImageSegmentation.csproj", "{56E6EFF9-CD9C-448B-8B63-B2B1507A0AFD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NPP_ImageSegmentation_CUDA", "5.CUDA runtime\NPP_ImageSegmentation\NPP_ImageSegmentation_CUDA\NPP_ImageSegmentation_CUDA.vcxproj", "{185ACDB6-87AD-48E2-A478-2CAA8E7CD7BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -577,6 +583,14 @@ Global
 		{F40AF656-734B-4BDC-81A2-E84B2A6A4AEA}.Debug|x64.Build.0 = Debug|x64
 		{F40AF656-734B-4BDC-81A2-E84B2A6A4AEA}.Release|x64.ActiveCfg = Release|x64
 		{F40AF656-734B-4BDC-81A2-E84B2A6A4AEA}.Release|x64.Build.0 = Release|x64
+		{56E6EFF9-CD9C-448B-8B63-B2B1507A0AFD}.Debug|x64.ActiveCfg = Debug|x64
+		{56E6EFF9-CD9C-448B-8B63-B2B1507A0AFD}.Debug|x64.Build.0 = Debug|x64
+		{56E6EFF9-CD9C-448B-8B63-B2B1507A0AFD}.Release|x64.ActiveCfg = Release|x64
+		{56E6EFF9-CD9C-448B-8B63-B2B1507A0AFD}.Release|x64.Build.0 = Release|x64
+		{185ACDB6-87AD-48E2-A478-2CAA8E7CD7BA}.Debug|x64.ActiveCfg = Debug|x64
+		{185ACDB6-87AD-48E2-A478-2CAA8E7CD7BA}.Debug|x64.Build.0 = Debug|x64
+		{185ACDB6-87AD-48E2-A478-2CAA8E7CD7BA}.Release|x64.ActiveCfg = Release|x64
+		{185ACDB6-87AD-48E2-A478-2CAA8E7CD7BA}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -683,6 +697,9 @@ Global
 		{C063ED50-D95E-4DC5-A34E-EB7E09345F7C} = {63E090F8-FA5D-4D58-B9DF-6837D2630F72}
 		{FD149428-F752-4472-865D-0F7381A06588} = {C063ED50-D95E-4DC5-A34E-EB7E09345F7C}
 		{F40AF656-734B-4BDC-81A2-E84B2A6A4AEA} = {C063ED50-D95E-4DC5-A34E-EB7E09345F7C}
+		{8537A1FB-4800-4E12-8B47-2D93A6371FCB} = {587DEA85-E77D-4C61-8E01-B5EFB426780B}
+		{56E6EFF9-CD9C-448B-8B63-B2B1507A0AFD} = {8537A1FB-4800-4E12-8B47-2D93A6371FCB}
+		{185ACDB6-87AD-48E2-A478-2CAA8E7CD7BA} = {8537A1FB-4800-4E12-8B47-2D93A6371FCB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0F397272-0E73-42D3-A8B0-66344B28521E}
