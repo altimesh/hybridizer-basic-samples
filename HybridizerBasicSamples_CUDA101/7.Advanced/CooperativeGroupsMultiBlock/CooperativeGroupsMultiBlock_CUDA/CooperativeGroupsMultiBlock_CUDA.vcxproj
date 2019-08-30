@@ -70,7 +70,7 @@
   <PropertyGroup Label="HybridizerConfig" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <HybridizerFlavors>CUDA</HybridizerFlavors>
     <HybridizerBuiltInFiles>$(HybridizerInstallPath)\include\hybridizer.cuda.builtins</HybridizerBuiltInFiles>
-    <HybridizerJitterServicePath>$(HybridizerInstallPath)\bin\Hybridizer.PTXJitterService.10.0.exe</HybridizerJitterServicePath>
+    <HybridizerJitterServicePath>$(HybridizerInstallPath)\bin\Hybridizer.PTXJitterService.10.1.exe</HybridizerJitterServicePath>
     <HybridizerJitterServiceOptions>-DNDEBUG;--gpu-architecture=auto;-G;--relocatable-device-code=true;-lineinfo;--std=c++14;-DNO_EXCEPTION</HybridizerJitterServiceOptions>
     <HybridizerJitterAdditionalLibs>$(CUDA_PATH_V10_0)\lib\x64\cudadevrt.lib</HybridizerJitterAdditionalLibs>
     <HybridizerDllFullPath>..\$(DotNetProjectName)\$(DotNetProjectName).csproj</HybridizerDllFullPath>
@@ -89,7 +89,7 @@
   <PropertyGroup Label="HybridizerConfig" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <HybridizerFlavors>CUDA</HybridizerFlavors>
     <HybridizerBuiltInFiles>$(HybridizerInstallPath)\include\hybridizer.cuda.builtins</HybridizerBuiltInFiles>
-    <HybridizerJitterServicePath>$(HybridizerInstallPath)\bin\Hybridizer.PTXJitterService.10.0.exe</HybridizerJitterServicePath>
+    <HybridizerJitterServicePath>$(HybridizerInstallPath)\bin\Hybridizer.PTXJitterService.10.1.exe</HybridizerJitterServicePath>
     <HybridizerJitterServiceOptions>-DNDEBUG;--gpu-architecture=auto;-G;--relocatable-device-code=true;-lineinfo;--std=c++14;-DNO_EXCEPTION</HybridizerJitterServiceOptions>
     <HybridizerJitterAdditionalLibs>$(CUDA_PATH_V10_0)\lib\x64\cudadevrt.lib</HybridizerJitterAdditionalLibs>
     <HybridizerDllFullPath>..\$(DotNetProjectName)\$(DotNetProjectName).csproj</HybridizerDllFullPath>

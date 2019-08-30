@@ -133,7 +133,7 @@ namespace NBody
         float4 Momentum(float4 velocity)
         {
             var mass = velocity.w;
-            return new float4(velocity.x * mass,
+            return float4.make_float4(velocity.x * mass,
                               velocity.y * mass,
                               velocity.z * mass,
                               mass);

@@ -34,16 +34,16 @@ namespace Mandelbulb
             var lightX = MathFunctions.cosf(rad) * depth_of_field / 2;
             var lightZ = MathFunctions.sinf(rad) * depth_of_field / 2;
 
-            float3 lightLocation = new float3(lightX, depth_of_field / 2, lightZ);
-            lightDirection = new float3(0.0F, 0.0F, 0.0F) - lightLocation;
+            float3 lightLocation = float3.make_float3(lightX, depth_of_field / 2, lightZ);
+            lightDirection = float3.make_float3(0.0F, 0.0F, 0.0F) - lightLocation;
             MathFunctions.normalize(ref lightDirection);
 
             float viewRad = MathFunctions.toRad(viewAngle);
             float viewX = MathFunctions.cosf(viewRad) * depth_of_field / 2;
             float viewZ = MathFunctions.sinf(viewRad) * depth_of_field / 2;
 
-            nearFieldLocation = new float3(viewX, 0.0F, viewZ);
-            viewDirection = new float3(0.0F, 0.0F, 0.0F) - nearFieldLocation;
+            nearFieldLocation = float3.make_float3(viewX, 0.0F, viewZ);
+            viewDirection = float3.make_float3(0.0F, 0.0F, 0.0F) - nearFieldLocation;
             MathFunctions.normalize(ref viewDirection);
 
             float3 reverseDirection = viewDirection * eyeDistanceFromNearField;

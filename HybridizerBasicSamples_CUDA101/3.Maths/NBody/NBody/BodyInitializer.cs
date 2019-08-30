@@ -25,13 +25,13 @@ namespace NBody
             {
                 if( i < numBodies / 2)
                 {
-                    positions[i] = new float4(RandP() + 0.5f * PScale, RandP(), RandP() + 50.0f, RandM());
-                    velocities[i] = new float4(RandV(), RandV() + 0.01f * VScale * positions[i].x * positions[i].x, RandV(), positions[i].w);
+                    positions[i] = float4.make_float4(RandP() + 0.5f * PScale, RandP(), RandP() + 50.0f, RandM());
+                    velocities[i] = float4.make_float4(RandV(), RandV() + 0.01f * VScale * positions[i].x * positions[i].x, RandV(), positions[i].w);
                 }
                 else
                 {
-                    positions[i] = new float4(RandP() - 0.5f * PScale, RandP(), RandP() + 50.0f, RandM());
-                    velocities[i]  = new float4(RandV(), RandV() - 0.01f * VScale * positions[i].x * positions[i].x, RandV(), positions[i].w);
+                    positions[i] = float4.make_float4(RandP() - 0.5f * PScale, RandP(), RandP() + 50.0f, RandM());
+                    velocities[i]  = float4.make_float4(RandV(), RandV() - 0.01f * VScale * positions[i].x * positions[i].x, RandV(), positions[i].w);
                 }
                 totalMomentum += Momentum(velocities[i]);
             }
@@ -49,7 +49,7 @@ namespace NBody
         {
             // we store mass in velocity.w
             var mass = velocity.w;
-            return new float4(velocity.x * mass,
+            return float4.make_float4(velocity.x * mass,
                               velocity.y * mass,
                               velocity.z * mass,
                               mass);
