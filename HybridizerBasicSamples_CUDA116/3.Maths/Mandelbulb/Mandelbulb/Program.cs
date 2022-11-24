@@ -62,11 +62,14 @@ namespace Mandelbulb
         public Program() : base(1024, 1024, GraphicsMode.Default, "Hybridizer Mandelbulb", GameWindowFlags.Default)
         {
             WindowBorder = WindowBorder.Fixed; // disable resize
+            Console.WriteLine("[WARNING] make sure your preferred rendering gpu is cuda compatible (not intel integrated):");
+            Console.WriteLine("\tGo to Nvidia Control panel > manage 3D settings > preferred graphics processor");
             Init();
             runner = HybRunner.Cuda().SetDistrib(32, 32, 16, 16, 1, 0);
             wrapped = runner.Wrap(new Mandelbulb());
             cuda.ERROR_CHECK(cuda.GetLastError());
             cuda.ERROR_CHECK(cuda.DeviceSynchronize());
+
         }
 
         protected int LoadShaderProgram(string VSSource, string FSSource)
