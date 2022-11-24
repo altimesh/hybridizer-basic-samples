@@ -93,6 +93,7 @@ namespace GenericReduction
 		{
 			reductor.Reduce(result, input, N);
 		}
+
 		[EntryPoint]
 		public static void ReduceMax(GridReductor<MaxReductor> reductor, float[] result, float[] input, int N)
 		{
@@ -126,7 +127,7 @@ namespace GenericReduction
 
 			// device reduction
 			wrapped.ReduceMax(maxReductor, buffMax, a, N);
-			wrapped.ReduceAdd(addReductor, buffAdd, a, N);
+			//wrapped.ReduceAdd(addReductor, buffAdd, a, N);
 			cuda.ERROR_CHECK(cuda.DeviceSynchronize());
 
 			// check results
