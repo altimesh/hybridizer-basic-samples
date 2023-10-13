@@ -122,8 +122,9 @@
       <InterleaveSourceInPTX>false</InterleaveSourceInPTX>
       <GenerateLineInfo>false</GenerateLineInfo>
       <Defines>-DHYBRIDIZER_NULL_CHECKS_BREAK</Defines>
-      <Include></Include>
-      <CodeGeneration>compute_30,sm_30</CodeGeneration>
+      <Include>
+      </Include>
+      <CodeGeneration>compute_75,sm_75</CodeGeneration>
       <GPUDebugInfo>false</GPUDebugInfo>
     </CudaCompile>
   </ItemDefinitionGroup>

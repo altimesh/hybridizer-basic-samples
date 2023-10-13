@@ -1,5 +1,5 @@
 ﻿<Project>
   <PropertyGroup>
-    <CUDAVersion>11.6</CUDAVersion>
+    <CUDAVersion>12.2</CUDAVersion>
   </PropertyGroup>
 </Project>

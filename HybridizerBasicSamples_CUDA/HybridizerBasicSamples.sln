@@ -312,8 +312,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Builtin_CUDA", "1.Simple\Bu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D08E2D3B-C17B-407B-B20F-3E6A23F4CECE}"
 	ProjectSection(SolutionItems) = preProject
-		Directory.Build.props = Directory.Build.props
 		App.config = App.config
+		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
 Global
@@ -447,9 +447,13 @@ Global
 		{8DF76B17-8149-4C3C-958F-6154F6FF66D0}.Release|x64.ActiveCfg = Release|x64
 		{8DF76B17-8149-4C3C-958F-6154F6FF66D0}.Release|x64.Build.0 = Release|x64
 		{C039CEB0-582F-4A5A-8568-EC4E15B7BD2E}.Debug|x64.ActiveCfg = Debug|x64
+		{C039CEB0-582F-4A5A-8568-EC4E15B7BD2E}.Debug|x64.Build.0 = Debug|x64
 		{C039CEB0-582F-4A5A-8568-EC4E15B7BD2E}.Release|x64.ActiveCfg = Release|x64
+		{C039CEB0-582F-4A5A-8568-EC4E15B7BD2E}.Release|x64.Build.0 = Release|x64
 		{EEEF4297-D1C9-4239-966F-7BA057A56FBD}.Debug|x64.ActiveCfg = Debug|x64
+		{EEEF4297-D1C9-4239-966F-7BA057A56FBD}.Debug|x64.Build.0 = Debug|x64
 		{EEEF4297-D1C9-4239-966F-7BA057A56FBD}.Release|x64.ActiveCfg = Release|x64
+		{EEEF4297-D1C9-4239-966F-7BA057A56FBD}.Release|x64.Build.0 = Release|x64
 		{DD1F1EF5-7C4F-4AB6-ABF5-25A719C90CB5}.Debug|x64.ActiveCfg = Debug|x64
 		{DD1F1EF5-7C4F-4AB6-ABF5-25A719C90CB5}.Debug|x64.Build.0 = Debug|x64
 		{DD1F1EF5-7C4F-4AB6-ABF5-25A719C90CB5}.Release|x64.ActiveCfg = Release|x64

@@ -42,6 +42,8 @@ namespace NPP_ImageSegmentation
 
         static void Main(string[] args)
         {
+            Console.WriteLine("NPP support is broken for cuda > 12");
+            return 0;
             // init CUDA
             IntPtr d;
             cuda.Malloc(out d, sizeof(int));
